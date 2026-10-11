@@ -1,0 +1,2113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0e1013">
+<meta name="mobile-web-app-capable" content="yes">
+<title>DARK-SATIN</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="icon" href="logo-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="logo-512.png">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--c-in:#2f97c8;--c-out:#cf7a30;--bg:#0e1013;--s1:#16191e;--s2:#1e2229;--line:#292e37;--tx:#eceef1;--mu:#8a919d;--ac:#8fd1b0;--ac-ink:#0e1013;--pos:#6fd6a0;--neg:#ff8577;--warn:#f0b75e;--r:18px;--shadow:0 10px 30px rgba(0,0,0,.35)}
+[data-theme=light]{--c-in:#0f7fa8;--c-out:#d9782a;--bg:#f4f2ec;--s1:#fff;--s2:#ece8de;--line:#e2ddd2;--tx:#1b1d20;--mu:#6d7179;--ac:#2f7d5b;--ac-ink:#fff;--pos:#1f8a55;--neg:#c9443a;--warn:#b7791f;--shadow:0 10px 30px rgba(40,30,10,.14)}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--tx);font:15px/1.45 'Manrope',system-ui,sans-serif;min-height:100vh;-webkit-tap-highlight-color:transparent}
+body.lock{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+button:disabled{opacity:.4;cursor:default}
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;padding-top:calc(14px + env(safe-area-inset-top));background:linear-gradient(var(--bg) 75%,transparent);max-width:560px;margin:0 auto}
+.brand{font-family:'Fraunces',serif;font-weight:600;font-size:22px;letter-spacing:.04em}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{border-radius:9px}
+.brand i{color:var(--ac);font-style:normal}
+.icon-btn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--s1);border:1px solid var(--line);color:var(--mu)}
+.icon-btn svg{width:20px;height:20px}
+main{max-width:560px;margin:0 auto;padding:4px 16px calc(130px + env(safe-area-inset-bottom))}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:28px;letter-spacing:-.02em;line-height:1.15}
+h2{font-family:'Fraunces',serif;font-weight:500;font-size:22px}
+h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--mu)}
+.muted{color:var(--mu)}
+.hello{margin:6px 2px 16px}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:12px}
+.card-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.link{color:var(--ac);font-weight:600;font-size:13px}
+.hero{background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,var(--ac) 20%,var(--s1)) 0%,var(--s1) 60%)}
+.label{font-size:12px;color:var(--mu);display:block}
+.big{font-size:34px;font-weight:700;letter-spacing:-.02em;margin:2px 0 14px;font-variant-numeric:tabular-nums}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row2 b{font-size:17px;font-variant-numeric:tabular-nums}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+.empty{color:var(--mu);font-size:14px}
+p.empty.card{padding:18px 16px}
+.jsnip{font-family:'Fraunces',serif;font-size:15px;line-height:1.55;color:var(--tx);opacity:.85}
+.nudge{border-color:color-mix(in srgb,var(--warn) 55%,var(--line));display:flex;align-items:center;gap:12px}
+.nudge p{flex:1;font-size:13px;color:var(--mu)}
+.nudge b{color:var(--tx);display:block}
+/* tasks */
+.task{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.card>.task:first-child,.card-h+.task,.dgroup+.task{border-top:0}
+.chk{width:26px;height:26px;flex:none;border-radius:9px;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--ac-ink)}
+.task.done .chk{background:var(--ac);border-color:var(--ac)}
+.task.done .ttl{text-decoration:line-through;color:var(--mu)}
+.tmain{flex:1;min-width:0;cursor:pointer}
+.ttl{font-weight:600;word-break:break-word}
+.meta{font-size:12px;color:var(--mu);display:flex;gap:8px;flex-wrap:wrap;margin-top:1px}
+.meta:empty{display:none}
+.due-over{color:var(--neg);font-weight:600}.due-today{color:var(--ac);font-weight:600}
+.pri{width:8px;height:8px;border-radius:50%;flex:none}
+.p1{background:var(--neg)}.p2{background:var(--warn)}.p3{background:var(--line)}
+.more{font-size:13px;color:var(--mu);padding-top:8px}
+/* nav */
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:6;display:flex;justify-content:center;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+.tabs button{flex:1;max-width:140px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;font-size:11px;font-weight:600;color:var(--mu)}
+.tabs svg{width:22px;height:22px}
+.tabs button.on{color:var(--tx)}
+.tabs button.on svg{color:var(--ac)}
+.fab{position:fixed;right:max(18px,calc(50% - 262px));bottom:calc(82px + env(safe-area-inset-bottom));z-index:7;width:58px;height:58px;border-radius:20px;background:var(--ac);color:var(--ac-ink);box-shadow:var(--shadow);display:grid;place-items:center}
+.fab svg{width:26px;height:26px}
+/* segments & chips */
+.seg{display:flex;background:var(--s2);border-radius:14px;padding:4px;gap:4px;margin-bottom:14px}
+.seg>*{flex:1;position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span,.seg>button{display:block;text-align:center;padding:8px 4px;border-radius:10px;font-weight:600;font-size:13px;color:var(--mu);width:100%;cursor:pointer}
+.seg input:checked+span,.seg>button.on{background:var(--s1);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.seg em{font-style:normal;opacity:.6;font-weight:500}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 14px;padding:0 16px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:8px 14px;border-radius:999px;background:var(--s1);border:1px solid var(--line);font-weight:600;font-size:13px;white-space:nowrap}
+.chip.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.chip.dash{border-style:dashed;color:var(--mu)}
+.acct{flex:none;min-width:132px;padding:12px 14px;border-radius:16px;background:var(--s1);border:1px solid var(--line);text-align:left}
+.acct small{display:block;color:var(--mu);font-size:12px}
+.acct b{font-variant-numeric:tabular-nums}
+.acct.add{display:grid;place-items:center;min-width:64px;color:var(--mu);font-size:22px;border-style:dashed}
+/* date bar */
+.datebar{display:flex;align-items:center;justify-content:space-between;margin:2px 0 14px}
+.datebar>button{width:42px;height:42px;border-radius:12px;background:var(--s1);border:1px solid var(--line);font-size:20px}
+.datebar>div{text-align:center}
+.datebar b{display:block;font-size:17px}
+.datebar small{color:var(--mu)}
+.sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.sum>div{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-width:0}
+.sum b{display:block;font-size:15px;font-variant-numeric:tabular-nums;margin-top:2px;overflow:hidden;text-overflow:ellipsis}
+/* transactions */
+.dgroup{font-size:12px;font-weight:700;color:var(--mu);margin:16px 2px 6px;text-transform:uppercase;letter-spacing:.06em}
+.card .dgroup{margin:14px 0 2px}
+.card .dgroup:first-child{margin-top:0}
+.tx{display:flex;align-items:center;gap:12px;padding:10px 12px;background:var(--s1);border:1px solid var(--line);border-radius:14px;margin-bottom:6px;width:100%;text-align:left}
+.tx .ic{width:36px;height:36px;border-radius:11px;background:var(--s2);display:grid;place-items:center;font-weight:700;flex:none;color:var(--mu)}
+.tx .m{flex:1;min-width:0}
+.tx .m b{display:block;font-weight:600}
+.tx .m small{color:var(--mu);font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx .a{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* budgets */
+.brow{padding:10px 0;border-top:1px solid var(--line);cursor:pointer}
+.brow:first-child,.card-h+.brow{border-top:0}
+.bt{display:flex;justify-content:space-between;font-weight:600;font-size:14px;margin-bottom:6px;gap:8px}
+.bt small{color:var(--mu);font-weight:500}
+.bar{height:8px;border-radius:99px;background:var(--s2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ac);border-radius:99px}
+.bar.warn i{background:var(--warn)}.bar.over i{background:var(--neg)}
+.hint{font-size:12px;color:var(--mu);margin-top:6px}
+/* journal */
+.moods{display:flex;gap:6px;margin-bottom:12px}
+.mood{flex:1;font-size:26px;padding:8px 0;border-radius:14px;background:var(--s1);border:1px solid var(--line);filter:grayscale(1);opacity:.5;transition:.15s}
+.mood.on{filter:none;opacity:1;border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,var(--s1))}
+.jlabel{display:flex;justify-content:space-between;align-items:baseline;margin:18px 2px 8px}
+textarea.jt{display:block;width:100%;min-height:220px;field-sizing:content;resize:none;background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:16px;font-family:'Fraunces',serif;font-size:17px;line-height:1.6;outline:none}
+textarea.jp{min-height:110px;font-family:'Manrope',sans-serif;font-size:15px;line-height:1.7}
+textarea.jt:focus{border-color:var(--ac)}
+.saved{font-size:12px;color:var(--mu)}
+.jentry{display:block;width:100%;text-align:left;padding:12px 14px;background:var(--s1);border:1px solid var(--line);border-radius:14px;margin-bottom:6px}
+.jentry b{font-size:14px}
+.jentry p{color:var(--mu);font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px}
+/* sheet & forms */
+.sheet-bg{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center}
+.sheet-bg.open{display:flex;animation:fade .15s}
+.sheet{width:100%;max-width:560px;max-height:92vh;overflow:auto;background:var(--bg);border-radius:24px 24px 0 0;padding:10px 16px calc(18px + env(safe-area-inset-bottom));animation:up .22s cubic-bezier(.2,.8,.2,1)}
+.sheet::before{content:'';display:block;width:40px;height:4px;border-radius:9px;background:var(--line);margin:0 auto 10px}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@keyframes fade{from{opacity:0}}
+.sh-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.x{width:36px;height:36px;border-radius:10px;background:var(--s1);font-size:15px;color:var(--mu)}
+.f{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;min-width:0}
+.f>span{font-size:12px;font-weight:600;color:var(--mu)}
+.f input,.f select,.f textarea{width:100%;background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:12px;outline:none;min-height:48px}
+.f textarea{min-height:72px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--ac)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.amt{width:100%;font-size:38px;font-weight:700;text-align:center;background:transparent;border:0;border-bottom:2px solid var(--line);padding:6px 0 10px;margin-bottom:16px;outline:none;font-variant-numeric:tabular-nums}
+.amt:focus{border-color:var(--ac)}
+.actions{display:flex;gap:10px;margin-top:8px}
+.btn{flex:1;padding:14px;border-radius:14px;font-weight:700;text-align:center}
+.btn.primary{background:var(--ac);color:var(--ac-ink)}
+.btn.danger{background:color-mix(in srgb,var(--neg) 14%,transparent);color:var(--neg);flex:.6}
+.btn.ghost{background:var(--s1);border:1px solid var(--line)}
+.btn.small{flex:none;padding:10px 14px;font-size:13px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick button{padding:18px 14px;border-radius:18px;background:var(--s1);border:1px solid var(--line);text-align:left;font-weight:700}
+.quick small{display:block;color:var(--mu);font-weight:500;font-size:12px;margin-top:2px}
+.quick .e{font-size:22px;display:block;margin-bottom:6px;color:var(--ac)}
+.setrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.setrow>span{font-weight:600}
+.toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:.2s;z-index:30;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+/* login */
+body.pre .top,body.pre main,body.pre .fab,body.pre .tabs{display:none!important}
+.gate{display:none;min-height:100vh;align-items:center;justify-content:center;padding:32px 20px calc(32px + env(safe-area-inset-bottom))}
+body.pre .gate{display:flex}
+.gate-in{width:100%;max-width:380px}
+.glogo{width:76px;height:76px;border-radius:22px;display:block;margin:0 auto 16px;box-shadow:var(--shadow)}
+.gname{text-align:center;font-weight:600;letter-spacing:.04em;margin-bottom:6px}
+.gname i{color:var(--ac);font-style:normal}
+.gsub{text-align:center;color:var(--mu);font-size:14px;margin-bottom:22px;line-height:1.6}
+.gsub b{color:var(--tx)}
+.gok{background:color-mix(in srgb,var(--ac) 14%,var(--s1));border:1px solid color-mix(in srgb,var(--ac) 40%,var(--line));border-radius:12px;padding:10px 12px;font-size:13px;margin-bottom:14px}
+.gerr{color:var(--neg);font-size:13px;min-height:18px;margin:2px 2px 10px}
+.glinks{display:flex;justify-content:space-between;margin-top:16px}
+.pw{position:relative}
+.pw input{padding-right:64px}
+.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:var(--mu);padding:8px}
+.spin{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--ac);border-radius:50%;margin:8px auto 16px;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.acctbox{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:14px}
+.acctbox b{display:block;word-break:break-all;margin:2px 0 10px}
+.acctbtns{display:flex;gap:8px}
+.btn.danger.small{flex:none}
+/* v2: lock, quick, recurring */
+.toast.act{pointer-events:auto;display:flex;align-items:center;gap:14px}
+.toast button{color:var(--ac);font-weight:800;padding:2px 0}
+[data-theme=light] .toast button{color:#8fd1b0}
+.rp{color:var(--ac);font-weight:700}
+.qbar{margin-bottom:14px}
+.qbar .label{margin:0 2px 8px}
+.qbar .chips{margin-bottom:0}
+.check{display:flex;align-items:center;gap:10px;margin:2px 2px 14px;font-size:14px;font-weight:600}
+.check input{width:20px;height:20px;accent-color:var(--ac)}
+.qlist{display:flex;flex-wrap:wrap;gap:8px}
+.qlist .chip{display:flex;align-items:center;gap:6px;padding-right:6px}
+.qlist .chip button{width:24px;height:24px;border-radius:50%;background:var(--s2);color:var(--mu);font-size:15px;line-height:1}
+select.mini{background:var(--s2);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.lockscr{position:fixed;inset:0;z-index:40;background:var(--bg);display:none;align-items:center;justify-content:center;padding:24px 20px calc(24px + env(safe-area-inset-bottom))}
+.lockscr.on{display:flex}
+.lock-in{width:100%;max-width:320px;text-align:center}
+.dots{display:flex;justify-content:center;gap:14px;margin:4px 0 8px;min-height:16px}
+.dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--mu)}
+.dots i.on{background:var(--ac);border-color:var(--ac)}
+.dots.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 6px 22px}
+.keys button{height:66px;border-radius:50%;width:66px;justify-self:center;background:var(--s1);border:1px solid var(--line);font-size:24px;font-weight:600}
+.keys button:active{background:var(--s2)}
+.keys .kb{background:none;border:0;color:var(--ac);display:grid;place-items:center}
+.keys .kb svg{width:30px;height:30px}
+.keys .kd{background:none;border:0;color:var(--mu);font-size:22px}
+/* v3: reports & allocation */
+.seg>button{padding-left:2px;padding-right:2px}
+.bar.done i{background:var(--ac)}
+.brow.alloc .bt small{margin-left:4px}
+.crow{display:block;width:100%;text-align:left;padding:10px 0;border-top:1px solid var(--line)}
+.card-h+.crow{border-top:0}
+.cbar{height:6px;border-radius:99px;background:var(--s2);overflow:hidden}
+.cbar i{display:block;height:100%;background:var(--c-out);border-radius:0 4px 4px 0}
+.cmeta{display:flex;gap:10px;font-size:12px;margin-top:5px;min-height:16px}
+.cmeta .up{color:var(--tx);font-weight:600}.cmeta .down{color:var(--mu);font-weight:600}
+.legend{display:flex;gap:14px;font-size:12px;color:var(--mu);margin:-2px 0 6px;align-items:center}
+.legend span{display:flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block}
+.sw-in{background:var(--c-in)}.sw-out{background:var(--c-out)}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart .b-in{fill:var(--c-in)}.chart .b-out{fill:var(--c-out)}
+.chart .dim{opacity:.45}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart .ax{fill:var(--mu);font-size:10px;font-family:inherit}
+.chart .axsel{fill:var(--tx);font-weight:700}
+.chart .hit{fill:transparent;cursor:pointer}
+.mini-t{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;font-variant-numeric:tabular-nums}
+.mini-t tr{cursor:pointer;display:grid;grid-template-columns:40px 1fr 1fr 56px;gap:6px;padding:5px 2px;border-top:1px solid var(--line)}
+.mini-t td{text-align:right;color:var(--mu)}.mini-t td:first-child{text-align:left}
+.mini-t tr.on td{color:var(--tx);font-weight:700}
+.mini-t tr.th{border-top:0;cursor:default}.mini-t tr.th td{font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.mini-t td.neg{color:var(--neg)}
+.bucket{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px}
+.bhead{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.bname{flex:1;min-width:0;background:var(--s2);border:1px solid transparent;border-radius:10px;padding:10px;font-weight:700;outline:none}
+.bname:focus,.pctbox:focus-within{border-color:var(--ac)}
+.pctbox{display:flex;align-items:center;gap:2px;background:var(--s2);border:1px solid transparent;border-radius:10px;padding:0 10px 0 4px;font-weight:700;color:var(--mu)}
+.pctbox input{width:46px;background:none;border:0;padding:10px 2px;text-align:right;font-weight:700;color:var(--tx);outline:none}
+.seg.sm{margin-bottom:10px}.seg.sm>button{padding:6px 4px;font-size:12px}
+.bucket .label{margin:0 2px 6px}
+.chipset{display:flex;flex-wrap:wrap;gap:6px}
+.chipset .chip{padding:6px 11px;font-size:12px}
+.chip.taken{opacity:.4}
+.alloc-total{text-align:center;font-size:13px;color:var(--mu);margin-bottom:6px}
+.alloc-total.ok b{color:var(--ac)}.alloc-total.bad,.alloc-total.bad b{color:var(--neg)}
+.meta .bell{color:var(--ac);font-weight:600}
+/* v5: trading, search, insights, encryption, import */
+.hbtns{display:flex;gap:8px}
+.tabs button{max-width:112px}
+.sum.s6{grid-template-columns:repeat(3,1fr)}
+.sum.s6 b small{font-weight:500;color:var(--mu);font-size:11px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-h{text-align:center;font-size:11px;font-weight:700;color:var(--mu);padding-bottom:2px}
+.cal-d{aspect-ratio:1;border-radius:10px;background:var(--s2);display:flex;flex-direction:column;justify-content:space-between;padding:4px 5px;text-align:left;position:relative;min-width:0;overflow:hidden}
+.cal-d .cd{font-size:11px;font-weight:700;color:var(--mu)}
+.cal-d .cm{position:absolute;top:3px;right:4px;font-size:10px}
+.cal-d .cp{font-size:10px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cal-d.strong,.cal-d.strong .cd{color:#fff}
+.cal-d.today{outline:2px solid var(--ac);outline-offset:-2px}
+.cal-d.future{opacity:.4}
+.mrow{display:grid;grid-template-columns:30px 1fr 92px;align-items:center;gap:8px;padding:6px 0}
+.mrow .me{font-size:20px}
+.mbar{height:12px;position:relative;background:linear-gradient(var(--line),var(--line)) center/1px 100% no-repeat}
+.mbar i{position:absolute;top:0;bottom:0;border-radius:4px}
+.mbar i.up{left:50%;background:var(--c-in);border-radius:0 4px 4px 0}
+.mbar i.dn{right:50%;background:var(--c-out);border-radius:4px 0 0 4px}
+.mrow .mv{text-align:right;font-weight:700;font-size:13px;font-variant-numeric:tabular-nums}
+.mrow .mv small{display:block;font-weight:500;color:var(--mu);font-size:11px}
+.tprev{text-align:center;font-size:15px;min-height:22px;margin:2px 0 6px;color:var(--mu)}
+.search{width:100%;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:13px 14px;font-size:16px;outline:none;margin-bottom:8px}
+.search:focus{border-color:var(--ac)}
+.qh{margin:16px 2px 6px}.qh small{color:var(--mu);font-weight:600}
+.qr{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;padding:10px 12px;background:var(--s1);border:1px solid var(--line);border-radius:12px;margin-bottom:6px;align-items:center}
+.qr>span:first-child{min-width:0;flex:1}
+.qr b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.qr small{display:block;color:var(--mu);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qr>span:last-child{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+mark{background:color-mix(in srgb,var(--ac) 35%,transparent);color:inherit;border-radius:3px;padding:0 1px}
+.moodc{width:100%;height:auto;display:block}
+.moodc .mb{fill:var(--ac)}.moodc .m1{opacity:.3}.moodc .m2{opacity:.45}.moodc .m3{opacity:.6}.moodc .m4{opacity:.8}.moodc .m5{opacity:1}
+.moodc .mb0{fill:var(--line)}
+.moodx{display:flex;justify-content:space-between;font-size:11px;color:var(--mu);margin-top:4px}
+.jlock{padding:22px 18px;margin-top:10px}
+.improw{text-align:right;margin:-4px 2px 4px}
+.imap{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:6px}
+.imap summary{font-weight:600;font-size:14px;cursor:pointer}
+.imap .grid2{margin-top:10px}
+.impr{display:grid;grid-template-columns:22px 1fr auto;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.impr:first-child{border-top:0}
+.impr.off{opacity:.5}
+.impr input{width:20px;height:20px;margin-top:2px;accent-color:var(--ac)}
+.impr .m{min-width:0}
+.impr b{display:block;font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.impr small{display:block;color:var(--mu);font-size:12px}
+.impr select{margin-top:6px;background:var(--s2);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:12px;max-width:100%}
+.impr .a{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+</style>
+</head>
+<body class="pre">
+<div class="gate"><div class="gate-in"><img src="logo.svg" class="glogo" alt=""><h1 class="gname">DARK-<i>SATIN</i></h1><div id="gateBody"></div></div></div>
+<header class="top">
+  <div class="brand"><img src="logo.svg" alt="" width="30" height="30"><span>DARK-<i>SATIN</i></span></div>
+  <span class="hbtns"><button class="icon-btn" data-act="search" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button class="icon-btn" data-act="settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span>
+</header>
+
+<main id="view"></main>
+
+<button class="fab" id="fab" data-act="fab" aria-label="Add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+
+<nav class="tabs">
+  <button data-act="tab" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
+  <button data-act="tab" data-tab="money"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="2.5"/><path d="M16 12.5h2M2.5 10h19"/></svg>Money</button>
+  <button data-act="tab" data-tab="trades"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M8 14v3M8 9v2M13 8v6M13 5v1M18 10v5M18 7v1"/><rect x="6.5" y="11" width="3" height="3" rx=".5"/><rect x="11.5" y="6" width="3" height="2" rx=".5"/><rect x="16.5" y="8" width="3" height="2" rx=".5"/></svg>Trades</button>
+  <button data-act="tab" data-tab="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v16H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M4 20.5A1.5 1.5 0 0 0 5.5 22H19v-3M8 8h7M8 12h5"/></svg>Journal</button>
+  <button data-act="tab" data-tab="tasks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m8 12 3 3 5-6"/></svg>Tasks</button>
+</nav>
+
+<div class="sheet-bg" id="sheetBg"><div class="sheet" id="sheet"></div></div>
+<div class="toast" id="toast"></div>
+<div class="lockscr" id="lock"><div class="lock-in"><img src="logo.svg" class="glogo" alt=""><p class="gsub" style="margin-bottom:16px">Enter your PIN</p><div class="dots" id="lockDots"></div><div class="gerr" id="lockMsg" style="text-align:center"></div>
+<div class="keys"><button data-act="pin" data-k="1">1</button><button data-act="pin" data-k="2">2</button><button data-act="pin" data-k="3">3</button><button data-act="pin" data-k="4">4</button><button data-act="pin" data-k="5">5</button><button data-act="pin" data-k="6">6</button><button data-act="pin" data-k="7">7</button><button data-act="pin" data-k="8">8</button><button data-act="pin" data-k="9">9</button><button class="kb" id="lockBio" data-act="bio" aria-label="Use fingerprint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 11v3a8 8 0 0 1-1.5 4.7M8 12a4 4 0 0 1 8 0v1.5M16 17v-.5M5 9.5a7.5 7.5 0 0 1 14 0M7.5 18A10 10 0 0 0 8 13M19.5 13.5V12M3.5 15c.4-1 .5-2 .5-3a8 8 0 0 1 .7-3.3M15 20.5c.3-.8.5-1.6.7-2.5"/></svg></button><button data-act="pin" data-k="0">0</button><button class="kd" data-act="pin" data-k="del" aria-label="Delete">⌫</button></div>
+<button class="link" data-act="forgotPin">Forgot PIN? Sign out</button></div></div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+
+<script type="module">
+/* =========================================================
+   1) PASTE YOUR FIREBASE WEB CONFIG HERE
+   Firebase console → Project settings → Your apps → Web app
+   (These values are public by design; security comes from
+   login + the Firestore rules in firestore.rules.)
+   ========================================================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyBkC0SPMitT2h9JJtdlKLrbRArzWDLA-DA",
+  authDomain: "dark-satin.firebaseapp.com",
+  projectId: "dark-satin",
+  storageBucket: "dark-satin.firebasestorage.app",
+  messagingSenderId: "332958698203",
+  appId: "1:332958698203:web:670c912387e9276650dafe"
+};
+
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signOut } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
+import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, doc, collection, onSnapshot, setDoc, deleteDoc, writeBatch, terminate, clearIndexedDbPersistence } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid_ = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const pad = n => String(n).padStart(2, '0');
+const ds = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today = () => ds(new Date());
+const parseD = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const addDays = (s, n) => { const d = parseD(s); d.setDate(d.getDate()+n); return ds(d); };
+const monthOf = s => s.slice(0, 7);
+const addMonths = (ym, n) => { const [y,m] = ym.split('-').map(Number); const d = new Date(y, m-1+n, 1); return `${d.getFullYear()}-${pad(d.getMonth()+1)}`; };
+const cap = s => s[0].toUpperCase() + s.slice(1);
+const INR = new Intl.NumberFormat('en-IN', {style:'currency', currency:'INR', minimumFractionDigits:0, maximumFractionDigits:2});
+const money = n => INR.format(n || 0);
+const relLabel = s => { const t = today(); if (s === t) return 'Today'; if (s === addDays(t,-1)) return 'Yesterday'; if (s === addDays(t,1)) return 'Tomorrow'; return parseD(s).toLocaleDateString('en-IN', {weekday:'short', day:'numeric', month:'short'}); };
+const fmtLong = s => parseD(s).toLocaleDateString('en-IN', {weekday:'long', day:'numeric', month:'long'});
+const monthName = ym => { const [y,m] = ym.split('-').map(Number); return new Date(y, m-1, 1).toLocaleDateString('en-IN', {month:'long', year:'numeric'}); };
+const fmtTime = s => { const [h,m] = s.split(':').map(Number); return `${(h%12)||12}:${pad(m)} ${h<12?'am':'pm'}`; };
+const greet = () => { const h = new Date().getHours(); return h<5 ? 'Late night' : h<12 ? 'Good morning' : h<17 ? 'Good afternoon' : 'Good evening'; };
+const MOODS = ['😞','😕','😐','🙂','😄'];
+let tT, undoFn = null;
+function toast(m, undo){
+  const el = $('#toast'); el.innerHTML = esc(m) + (undo ? '<button data-act="undo">Undo</button>' : '');
+  undoFn = undo || null; el.classList.toggle('act', !!undo); el.classList.add('show');
+  clearTimeout(tT); tT = setTimeout(() => { el.classList.remove('show'); undoFn = null; }, undo ? 5000 : 2200);
+}
+/* ---------- repeating dates ---------- */
+const FREQ = {daily:'Daily', weekdays:'Weekdays', weekly:'Weekly', monthly:'Monthly', yearly:'Yearly'};
+function nextDate(s, freq, anchor){
+  const d = parseD(s);
+  if (freq === 'daily') d.setDate(d.getDate() + 1);
+  else if (freq === 'weekdays') { do d.setDate(d.getDate() + 1); while (d.getDay() === 0 || d.getDay() === 6); }
+  else if (freq === 'weekly') d.setDate(d.getDate() + 7);
+  else {                                   // monthly / yearly, keeping the original day (31st → last day of short months)
+    const a = anchor || d.getDate();
+    const m = d.getMonth() + (freq === 'yearly' ? 12 : 1), y = d.getFullYear() + Math.floor(m / 12), mm = m % 12;
+    return ds(new Date(y, mm, Math.min(a, new Date(y, mm + 1, 0).getDate())));
+  }
+  return ds(d);
+}
+// Key-order-independent JSON, so we can tell what really changed
+const stable = v => Array.isArray(v) ? '[' + v.map(stable).join(',') + ']'
+  : v && typeof v === 'object' ? '{' + Object.keys(v).filter(k => v[k] !== undefined).sort().map(k => JSON.stringify(k) + ':' + stable(v[k])).join(',') + '}'
+  : JSON.stringify(v === undefined ? null : v);
+
+/* ---------- data model ---------- */
+const defaults = () => ({
+  version: 1,
+  accounts: [{id:'cash', name:'Cash', type:'cash', opening:0}, {id:'bank', name:'Bank', type:'bank', opening:0}],
+  categories: {
+    expense: ['Food','Groceries','Transport','Bills','Rent','Shopping','Health','Family','Fun','Other'],
+    income: ['Salary','Business','Trading','Interest','Other']
+  },
+  transactions: [], budgets: {}, journal: {},
+  projects: [{id:'personal', name:'Personal'}],
+  tasks: [], lastBackup: null,
+  recurring: [],      // {id, tpl:{type,amount,account,to,category,note}, freq, anchor, next}
+  quick: [],          // {id, label, type, amount, account, to, category, note}
+  alloc: null,        // {base:'income'|'fixed', fixed, buckets:[{id,name,pct,kind:'spend'|'save',cats:[],accts:[]}]}
+  trades: [],         // {id,date,symbol,kind:'intraday'|'swing',side:'long'|'short',qty,entry,exit,charges,pnl,mode:'trade'|'pnl',note,created}
+  trading: {account:null, post:false},
+  journalCrypto: null,// {salt, check, iter} when the journal is encrypted
+  importRules: {}     // 'keyword' -> category, learned from bank imports
+});
+let D = defaults();
+function migrate(d){ const base = defaults(); for (const k in base) if (d[k] === undefined || d[k] === null && !['lastBackup','alloc','journalCrypto'].includes(k)) d[k] = base[k]; if (!d.projects.length) d.projects = base.projects; if (!d.accounts.length) d.accounts = base.accounts; return d; }
+const settingsOf = () => ({version:D.version || 1, accounts:D.accounts, categories:D.categories, budgets:D.budgets, projects:D.projects, lastBackup:D.lastBackup || null, recurring:D.recurring, quick:D.quick, alloc:D.alloc || null, trading:D.trading || {account:null, post:false}, journalCrypto:D.journalCrypto || null, importRules:D.importRules || {}});
+
+/* ---------- Firebase ---------- */
+const configured = !String(firebaseConfig.apiKey).startsWith('PASTE');
+let app, auth, db, user = null, ready = false, unsubs = [];
+const got = {settings:false, transactions:false, tasks:false, journal:false, trades:false};
+let synced = {transactions:new Map(), tasks:new Map(), trades:new Map(), journal:new Map(), settings:null};
+const COLS = ['transactions','tasks','trades'];
+const uref = (...p) => doc(db, 'users', user.uid, ...p);
+
+/* ---------- journal encryption (AES-256-GCM, key made from your passphrase on this phone) ---------- */
+let jKey = null, jSeq = 0, jDocs = [];
+const te = new TextEncoder(), tdec = new TextDecoder();
+const b64e = buf => { const a = new Uint8Array(buf); let s = ''; for (let i = 0; i < a.length; i += 0x8000) s += String.fromCharCode(...a.subarray(i, i + 0x8000)); return btoa(s); };
+const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function deriveKey(pass, salt, iter){
+  const base = await crypto.subtle.importKey('raw', te.encode(pass.normalize('NFC')), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', salt:b64d(salt), iterations:iter, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['encrypt', 'decrypt']);
+}
+async function encryptJSON(obj, key = jKey){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, te.encode(JSON.stringify(obj)));
+  const out = new Uint8Array(12 + ct.byteLength); out.set(iv); out.set(new Uint8Array(ct), 12); return b64e(out);
+}
+async function decryptJSON(s, key = jKey){
+  const a = b64d(s);
+  return JSON.parse(tdec.decode(await crypto.subtle.decrypt({name:'AES-GCM', iv:a.subarray(0, 12)}, key, a.subarray(12))));
+}
+async function readJournal(docs){
+  const J = {}, M = new Map();
+  for (const [id, x] of docs) {
+    if (x.enc) {
+      if (!jKey) { J[id] = {locked:true, updated:x.updated || 0}; continue; }
+      try { const {date, ...rest} = await decryptJSON(x.enc); J[id] = rest; M.set(id, stable({...rest, date:id})); }
+      catch (_) { J[id] = {locked:true, updated:x.updated || 0}; }
+    } else { const {date, ...rest} = x; J[id] = rest; M.set(id, stable(x)); }
+  }
+  return {J, M};
+}
+// "Remember on this phone": the key is kept in the browser's key store as a non-exportable key.
+const idbKey = (op, id, val) => new Promise(ok => {
+  try {
+    const r = indexedDB.open('ds-keys', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('k');
+    r.onerror = () => ok(null);
+    r.onsuccess = () => {
+      const kdb = r.result, tx = kdb.transaction('k', op === 'get' ? 'readonly' : 'readwrite'), st = tx.objectStore('k');
+      const q = op === 'get' ? st.get(id) : op === 'put' ? st.put(val, id) : op === 'del' ? st.delete(id) : st.clear();
+      q.onsuccess = () => ok(op === 'get' ? (q.result || null) : true); q.onerror = () => ok(null);
+      tx.oncomplete = () => kdb.close();
+    };
+  } catch (_) { ok(null); }
+});
+const journalLocked = () => !!D.journalCrypto && !jKey;
+async function reloadJournal(){ const r = await readJournal(jDocs); D.journal = r.J; synced.journal = r.M; render(); }
+async function unlockJournal(pass, remember){
+  const c = D.journalCrypto, key = await deriveKey(pass, c.salt, c.iter);
+  try { if ((await decryptJSON(c.check, key)) !== 'dark-satin') throw 0; } catch (_) { return false; }
+  jKey = key; if (remember) await idbKey('put', user.uid, key);
+  await reloadJournal(); return true;
+}
+async function lockJournalNow(){ flushJournal(); jKey = null; await idbKey('del', user.uid); await reloadJournal(); toast('Journal locked'); }
+async function enableCrypto(pass, remember){
+  flushJournal();
+  const salt = b64e(crypto.getRandomValues(new Uint8Array(16))), iter = 250000, key = await deriveKey(pass, salt, iter);
+  jKey = key; D.journalCrypto = {salt, iter, check: await encryptJSON('dark-satin', key)};
+  if (remember) await idbKey('put', user.uid, key);
+  synced.journal = new Map(); save();                       // rewrites every entry, now encrypted
+}
+async function disableCrypto(){
+  flushJournal();
+  if (Object.values(D.journal).some(e => e.locked)) { toast("Some entries can't be read with this passphrase"); return; }
+  D.journalCrypto = null; synced.journal = new Map(); save();   // rewrites every entry as plain text
+  jKey = null; await idbKey('del', user.uid);
+}
+function forgotCrypto(){
+  if (prompt('This permanently deletes every locked journal entry. Type DELETE to continue.') !== 'DELETE') return;
+  const gone = Object.keys(D.journal).filter(d => D.journal[d].locked);
+  gone.forEach(d => delete D.journal[d]);
+  D.journalCrypto = null; jKey = null; idbKey('del', user.uid);
+  commitOps(gone.map(d => ['del', 'journal', d])); save(); render(); toast('Locked entries deleted. Journal encryption is off.');
+}
+
+// save(): compare current data with what Firestore last confirmed, write only the differences.
+function save(){
+  if (!ready || !user) return;
+  const ops = [];
+  syncTradingToMoney();
+  for (const col of COLS) {
+    const cur = new Map(D[col].map(x => [x.id, x]));
+    for (const [id, x] of cur) { const j = stable(x); if (synced[col].get(id) !== j) { ops.push(['set', col, id, x]); synced[col].set(id, j); } }
+    for (const id of [...synced[col].keys()]) if (!cur.has(id)) { ops.push(['del', col, id]); synced[col].delete(id); }
+  }
+  // journal: plain, or encrypted on this phone first when journal encryption is on
+  const jSets = [];
+  for (const [date, e] of Object.entries(D.journal)) { if (e.locked) continue; const x = {...e, date}, j = stable(x); if (synced.journal.get(date) !== j) { jSets.push(x); synced.journal.set(date, j); } }
+  for (const date of [...synced.journal.keys()]) if (!D.journal[date]) { ops.push(['del', 'journal', date]); synced.journal.delete(date); }
+  if (!D.journalCrypto) jSets.forEach(x => ops.push(['set', 'journal', x.date, x]));
+  else if (jKey && jSets.length) Promise.all(jSets.map(async x => ({date:x.date, enc:await encryptJSON(x), v:1, updated:x.updated || Date.now()})))
+    .then(docs => commitOps(docs.map(x => ['set', 'journal', x.date, x]))).catch(() => toast('Could not encrypt journal'));
+  const s = settingsOf(), sj = stable(s);
+  if (synced.settings !== sj) { ops.push(['set', 'meta', 'settings', s]); synced.settings = sj; }
+  // upcoming reminders, read by the GitHub sender (see reminders/send.js)
+  const rems = {items: reminderItems()}, rj = stable(rems);
+  if (synced.reminders !== rj) { ops.push(['set', 'meta', 'reminders', {...rems, tz: Intl.DateTimeFormat().resolvedOptions().timeZone, updated: Date.now()}]); synced.reminders = rj; }
+  scheduleLocal();
+  commitOps(ops);
+}
+function commitOps(ops){
+  for (let i = 0; i < ops.length; i += 400) {
+    const b = writeBatch(db);
+    ops.slice(i, i + 400).forEach(([op, col, id, x]) => op === 'set' ? b.set(uref(col, id), JSON.parse(JSON.stringify(x))) : b.delete(uref(col, id)));
+    b.commit().catch(err => { console.error(err); toast('Sync failed: ' + (err.code || 'error')); });
+  }
+}
+
+function onRemote(snap){
+  if (!ready || snap.metadata.hasPendingWrites) return;         // our own write echoing back
+  if ($('#sheetBg').classList.contains('open')) return;          // don't yank a form away
+  const ae = document.activeElement; if (ae && (ae.id === 'jText' || ae.id === 'jPlan')) return;
+  flushJournal(); render();
+}
+function maybeReady(){
+  if (ready || !Object.values(got).every(Boolean)) return;
+  ready = true; document.body.classList.remove('pre');
+  const n = runRecurring(); save(); if (n) toast(`${n} recurring entr${n > 1 ? 'ies' : 'y'} added`);
+  render(); offerLocalImport();
+  pushRefresh();
+  if (pendingNotif) { const p = pendingNotif; pendingNotif = null; handleNotif(p.action, p.task); }
+}
+// Create any recurring entries that have come due. IDs are fixed per rule+date,
+// so two phones doing this at once write the same entry instead of duplicates.
+function runRecurring(){
+  const t = today(); let made = 0;
+  for (const r of D.recurring) {
+    let guard = 0;
+    while (r.next && r.next <= t && guard++ < 400) {
+      const id = 'r_' + r.id + '_' + r.next;
+      if (!D.transactions.some(x => x.id === id) && D.accounts.some(a => a.id === r.tpl.account)) {
+        D.transactions.push({id, created:Date.now(), ...r.tpl, date:r.next, rule:r.id}); made++;
+      }
+      r.next = nextDate(r.next, r.freq, r.anchor);
+    }
+  }
+  return made;
+}
+function listen(){
+  const err = e => { console.error(e); gate('error', {msg: e.code === 'permission-denied' ? 'Access denied. Check that the Firestore rules are published and your email is verified.' : 'Could not load your data (' + (e.code || 'error') + ').'}); };
+  unsubs.push(onSnapshot(uref('meta', 'settings'), snap => {
+    if (!snap.exists()) {
+      if (snap.metadata.fromCache) return;                         // wait for the server before deciding it's empty
+      setDoc(uref('meta', 'settings'), settingsOf()).catch(err);   // brand-new account
+      return;
+    }
+    const s = snap.data(), base = defaults();
+    D.version = s.version || 1; D.accounts = s.accounts?.length ? s.accounts : base.accounts;
+    D.categories = s.categories || base.categories; D.budgets = s.budgets || {};
+    D.projects = s.projects?.length ? s.projects : base.projects; D.lastBackup = s.lastBackup || null;
+    D.recurring = s.recurring || []; D.quick = s.quick || []; D.alloc = s.alloc || null;
+    D.trading = s.trading || {account:null, post:false}; D.journalCrypto = s.journalCrypto || null; D.importRules = s.importRules || {};
+    synced.settings = stable(settingsOf());
+    got.settings = true; maybeReady(); onRemote(snap);
+  }, err));
+  for (const col of COLS) {
+    unsubs.push(onSnapshot(collection(db, 'users', user.uid, col), snap => {
+      D[col] = snap.docs.map(d => d.data());
+      synced[col] = new Map(D[col].map(x => [x.id, stable(x)]));
+      got[col] = true; maybeReady(); onRemote(snap);
+    }, err));
+  }
+  unsubs.push(onSnapshot(collection(db, 'users', user.uid, 'journal'), snap => {
+    const seq = ++jSeq; jDocs = snap.docs.map(d => [d.id, d.data()]);
+    readJournal(jDocs).then(r => { if (seq !== jSeq) return; D.journal = r.J; synced.journal = r.M; got.journal = true; maybeReady(); onRemote(snap); });
+  }, err));
+}
+
+// One-time: move data saved on this phone by the offline version into the account
+function offerLocalImport(){
+  let raw; try { raw = localStorage.getItem('daybook.v1'); if (!raw || localStorage.getItem('daybook.v1.moved')) return; } catch (_) { return; }
+  const cloudEmpty = !D.transactions.length && !D.tasks.length && !Object.keys(D.journal).length;
+  if (!cloudEmpty) return;
+  let old; try { old = JSON.parse(raw); } catch (_) { return; }
+  const n = (old.transactions || []).length + (old.tasks || []).length + Object.keys(old.journal || {}).length;
+  if (!n) return;
+  if (confirm(`Found ${n} items saved on this phone by the earlier offline version. Move them into this account?`)) { D = migrate(old); save(); render(); toast('Moved into your account'); }
+  try { localStorage.setItem('daybook.v1.moved', user.uid); } catch (_) {}
+}
+
+/* ---------- login screens ---------- */
+const AUTH_MSG = {
+  'auth/invalid-credential':'Wrong email or password.', 'auth/wrong-password':'Wrong email or password.', 'auth/user-not-found':'Wrong email or password.',
+  'auth/invalid-email':"That email address doesn't look right.", 'auth/email-already-in-use':'An account with this email already exists. Sign in instead.',
+  'auth/weak-password':'Password is too weak.', 'auth/password-does-not-meet-requirements':'Password does not meet the requirements.',
+  'auth/too-many-requests':'Too many attempts. Wait a few minutes and try again.', 'auth/network-request-failed':'No internet connection.',
+  'auth/operation-not-allowed':'Email/password sign-in is not enabled in Firebase yet.',
+  'x/mismatch':"Passwords don't match.", 'x/weak':'Use at least 8 characters with a letter and a number.'
+};
+const authMsg = e => AUTH_MSG[e.code] || 'Something went wrong (' + (e.code || 'error') + ').';
+const pwField = (name, label, ac) => `<label class="f"><span>${label}</span><div class="pw"><input name="${name}" type="password" autocomplete="${ac}" required><button type="button" data-act="pwshow">Show</button></div></label>`;
+function gate(view, o = {}){
+  document.body.classList.add('pre');
+  const b = $('#gateBody');
+  const form = (title, inner, btn) => `<p class="gsub">${title}</p><form id="gf" data-view="${view}" novalidate>${inner}<div class="gerr" id="gerr">${o.err ? esc(o.err) : ''}</div><button type="submit" class="btn primary" style="width:100%">${btn}</button></form>`;
+  if (view === 'loading') b.innerHTML = `<div class="spin"></div><p class="gsub">${esc(o.msg || 'Loading…')}</p>`;
+  else if (view === 'setup') b.innerHTML = `<p class="gsub">Almost there. Paste your Firebase config at the top of the script in <b>index.html</b>, then reload.</p>`;
+  else if (view === 'error') b.innerHTML = `<p class="gsub">${esc(o.msg)}</p><button class="btn ghost" style="width:100%" data-act="signout">Sign out</button>`;
+  else if (view === 'signin') b.innerHTML = (o.msg ? `<p class="gok">${esc(o.msg)}</p>` : '') + form('Sign in to your space',
+      `<label class="f"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" value="${esc(o.email || '')}" required></label>${pwField('password','Password','current-password')}`, 'Sign in')
+      + `<div class="glinks"><button class="link" data-act="gview" data-v="reset">Forgot password?</button><button class="link" data-act="gview" data-v="signup">Create account</button></div>`;
+  else if (view === 'signup') b.innerHTML = form('Create your private account',
+      `<label class="f"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>${pwField('password','Password (8+ characters, letters and numbers)','new-password')}${pwField('confirm','Confirm password','new-password')}`, 'Create account')
+      + `<div class="glinks"><span></span><button class="link" data-act="gview" data-v="signin">I have an account</button></div>`;
+  else if (view === 'reset') b.innerHTML = form("We'll email you a link to set a new password",
+      `<label class="f"><span>Email</span><input name="email" type="email" autocomplete="email" inputmode="email" required></label>`, 'Send reset link')
+      + `<div class="glinks"><span></span><button class="link" data-act="gview" data-v="signin">Back to sign in</button></div>`;
+  else if (view === 'verify') b.innerHTML = `<p class="gsub">We sent a verification link to<br><b>${esc(o.email)}</b>.<br>Open it, then come back here.</p>
+      <div class="gerr" id="gerr"></div>
+      <button class="btn primary" style="width:100%;margin-bottom:10px" data-act="verified">I've verified my email</button>
+      <div class="glinks"><button class="link" data-act="resend">Resend email</button><button class="link" data-act="signout">Use another account</button></div>`;
+  const first = b.querySelector('input'); if (first && !first.value) setTimeout(() => first.focus(), 50);
+}
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'gf') return;
+  e.preventDefault();
+  const f = e.target, fd = Object.fromEntries(new FormData(f)), err = $('#gerr'), btn = f.querySelector('button[type=submit]');
+  const email = (fd.email || '').trim();
+  if (!email) { err.textContent = 'Enter your email.'; return; }
+  err.textContent = ''; btn.disabled = true;
+  try {
+    const v = f.dataset.view;
+    if (v === 'signin') await signInWithEmailAndPassword(auth, email, fd.password || '');
+    else if (v === 'signup') {
+      const p = fd.password || '';
+      if (p !== fd.confirm) throw {code:'x/mismatch'};
+      if (p.length < 8 || !/[A-Za-z]/.test(p) || !/\d/.test(p)) throw {code:'x/weak'};
+      const c = await createUserWithEmailAndPassword(auth, email, p);
+      await sendEmailVerification(c.user);
+      gate('verify', {email});
+    } else if (v === 'reset') {
+      try { await sendPasswordResetEmail(auth, email); } catch (ex) { if (ex.code !== 'auth/user-not-found') throw ex; }
+      gate('signin', {email, msg:'If an account exists for that email, a reset link is on its way.'});
+    }
+  } catch (ex) { if ($('#gerr')) $('#gerr').textContent = authMsg(ex); }
+  finally { btn.disabled = false; }
+});
+async function startUser(u){
+  if (user && user.uid === u.uid) return;
+  user = u;
+  loadLock(); if (lockCfg) showLock();
+  gate('loading', {msg:'Syncing your data…'});
+  jKey = await idbKey('get', u.uid);              // journal key remembered on this phone, if any
+  listen();
+}
+async function doSignOut(ask){
+  if (ask && !confirm('Sign out of DARK-SATIN on this phone?')) return;
+  try { await pushDisable(); } catch (_) {}            // stop this account's reminders arriving on this phone
+  try { await idbKey('clear'); } catch (_) {}          // forget the remembered journal key
+  unsubs.forEach(f => { try { f(); } catch (_) {} });
+  try { await signOut(auth); } catch (_) {}
+  // wipe this account's offline copy so the next person on this phone can't see it
+  try { await terminate(db); await clearIndexedDbPersistence(db); } catch (_) {}
+  location.reload();
+}
+
+/* ---------- app lock (PIN + fingerprint, stored on this phone only) ---------- */
+let lockCfg = null, locked = false, hiddenAt = 0, pinBuf = '', busyUntil = 0;
+const LK = () => 'ds.lock.' + user.uid;
+function loadLock(){ try { lockCfg = JSON.parse(localStorage.getItem(LK()) || 'null'); } catch (_) { lockCfg = null; } }
+function saveLock(){ try { lockCfg ? localStorage.setItem(LK(), JSON.stringify(lockCfg)) : localStorage.removeItem(LK()); } catch (_) {} }
+const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function hashPin(pin, salt){
+  const k = await crypto.subtle.importKey('raw', new TextEncoder().encode(pin), 'PBKDF2', false, ['deriveBits']);
+  return b64(await crypto.subtle.deriveBits({name:'PBKDF2', salt:unb64(salt), iterations:150000, hash:'SHA-256'}, k, 256));
+}
+function showLock(){
+  if (!lockCfg || locked) return;
+  locked = true; pinBuf = ''; drawLock();
+  $('#lock').classList.add('on'); document.body.classList.add('lock');
+  if (lockCfg.bio && !document.hidden) setTimeout(bioUnlock, 300);
+}
+function drawLock(msg){
+  $('#lockDots').innerHTML = Array.from({length:lockCfg.len}, (_, i) => `<i class="${i < pinBuf.length ? 'on' : ''}"></i>`).join('');
+  $('#lockMsg').textContent = msg || '';
+  $('#lockBio').style.visibility = lockCfg.bio ? 'visible' : 'hidden';
+}
+function unlock(){
+  locked = false; hiddenAt = 0; lockCfg.fails = 0; lockCfg.until = 0; saveLock();
+  $('#lock').classList.remove('on');
+  if (!$('#sheetBg').classList.contains('open')) document.body.classList.remove('lock');
+}
+async function pinKey(k){
+  if (!locked) return;
+  if ((lockCfg.until || 0) > Date.now()) { drawLock(`Too many tries. Wait ${Math.ceil((lockCfg.until - Date.now()) / 1000)}s`); return; }
+  if (k === 'del') pinBuf = pinBuf.slice(0, -1); else if (pinBuf.length < lockCfg.len) pinBuf += k;
+  drawLock();
+  if (pinBuf.length < lockCfg.len) return;
+  const ok = (await hashPin(pinBuf, lockCfg.salt)) === lockCfg.hash;
+  pinBuf = '';
+  if (ok) return unlock();
+  lockCfg.fails = (lockCfg.fails || 0) + 1;
+  if (lockCfg.fails >= 10) { lockCfg = null; saveLock(); doSignOut(false); return; }   // 10 wrong → sign out (needs password to return)
+  if (lockCfg.fails % 5 === 0) lockCfg.until = Date.now() + 30000;
+  saveLock();
+  drawLock(lockCfg.fails >= 5 ? `Wrong PIN. ${10 - lockCfg.fails} tries left before sign-out.` : 'Wrong PIN');
+  const d = $('#lockDots'); d.classList.remove('shake'); void d.offsetWidth; d.classList.add('shake');
+}
+const bioAvailable = async () => { try { return !!(window.PublicKeyCredential && await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()); } catch (_) { return false; } };
+async function bioRegister(){
+  busyUntil = Date.now() + 90000;
+  try {
+    const cred = await navigator.credentials.create({publicKey:{
+      challenge: crypto.getRandomValues(new Uint8Array(32)),
+      rp: {name:'DARK-SATIN'},
+      user: {id: crypto.getRandomValues(new Uint8Array(16)), name: user.email, displayName: user.email},
+      pubKeyCredParams: [{type:'public-key', alg:-7}, {type:'public-key', alg:-257}],
+      authenticatorSelection: {authenticatorAttachment:'platform', userVerification:'required', residentKey:'discouraged'},
+      timeout: 60000, attestation: 'none'}});
+    return b64(cred.rawId);
+  } finally { busyUntil = Date.now() + 1500; }
+}
+async function bioUnlock(){
+  if (!lockCfg?.bio || !locked) return;
+  busyUntil = Date.now() + 90000;
+  try {
+    const a = await navigator.credentials.get({publicKey:{
+      challenge: crypto.getRandomValues(new Uint8Array(32)),
+      allowCredentials: [{type:'public-key', id:unb64(lockCfg.bio)}],
+      userVerification: 'required', timeout: 60000}});
+    const flags = new Uint8Array(a.response.authenticatorData)[32];
+    if (flags & 4) unlock(); else drawLock('Use your PIN');        // bit 2 = fingerprint/screen lock was verified
+  } catch (_) { if (locked) drawLock('Use your PIN'); }
+  finally { busyUntil = Date.now() + 1500; }
+}
+function pinForm(){
+  openSheet(`<form id="sf">${head(lockCfg ? 'Change PIN' : 'Set up app lock')}
+    <p class="hint" style="margin:-6px 2px 14px">Choose a 4 to 6 digit PIN. It's saved only on this phone, scrambled, never sent anywhere.</p>
+    <label class="f"><span>New PIN</span><input name="p1" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" autofocus></label>
+    <label class="f"><span>Repeat PIN</span><input name="p2" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off"></label>
+    <div class="actions"><button class="btn primary" value="save">Save PIN</button></div></form>`,
+  fd => {
+    const p = fd.p1 || '';
+    if (!/^\d{4,6}$/.test(p)) { toast('PIN must be 4 to 6 digits'); return false; }
+    if (p !== fd.p2) { toast("PINs don't match"); return false; }
+    const salt = b64(crypto.getRandomValues(new Uint8Array(16)));
+    hashPin(p, salt).then(hash => {
+      const first = !lockCfg;
+      lockCfg = {...(lockCfg || {after:0, bio:null}), len:p.length, salt, hash, fails:0, until:0};
+      saveLock(); closeSheet(); toast(first ? 'App lock is on' : 'PIN changed');
+    });
+    return false;
+  });
+}
+function lockSettingsHtml(){
+  if (!lockCfg) return `<div class="setrow"><span>App lock</span><button type="button" class="btn ghost small" data-act="pinSet">Set up PIN</button></div>
+    <p class="hint" style="margin:-8px 2px 14px">Ask for a PIN or fingerprint when DARK-SATIN opens.</p>`;
+  return `<div class="acctbox"><span class="label">App lock is on</span>
+    <div class="setrow" style="margin:10px 0"><span>Fingerprint</span><button type="button" class="btn ghost small" data-act="bioToggle">${lockCfg.bio ? 'Turn off' : 'Turn on'}</button></div>
+    <div class="setrow" style="margin:0 0 10px"><span>Lock after</span><select id="lockAfter" class="mini">${[[0,'Immediately'],[60,'1 minute'],[300,'5 minutes'],[900,'15 minutes']].map(([v,l]) => `<option value="${v}" ${(lockCfg.after||0)===v?'selected':''}>${l}</option>`).join('')}</select></div>
+    <div class="acctbtns"><button type="button" class="btn ghost small" data-act="pinSet">Change PIN</button><button type="button" class="btn danger small" data-act="lockOff">Turn off lock</button></div></div>`;
+}
+
+/* ---------- reminders ---------- */
+// Public half of the push key pair. The private half lives only in GitHub Secrets.
+const VAPID_PUBLIC_KEY = 'BH4G-JcZBIqg1kl3UgDEmwpPoCLX2iZfwxzdyiO08nD8-qsNWxkBD62l3HRePrpk9EEAV_LnLjl0xiKYUHUrNcw';
+const REMIND = [['', 'No reminder'], ['0', 'At the time'], ['5', '5 min before'], ['15', '15 min before'], ['30', '30 min before'], ['60', '1 hour before'], ['1440', '1 day before']];
+let testAt = 0, fgTimers = [], pendingNotif = null;
+function remindAt(x){
+  if (x.done || !x.due || x.remind === null || x.remind === undefined || x.remind === '') return null;
+  const [y, m, d] = x.due.split('-').map(Number), [hh, mm] = (x.time || '09:00').split(':').map(Number);
+  const at = new Date(y, m - 1, d, hh, mm).getTime() - (+x.remind) * 60000;
+  return at >= (x.edited || 0) - 60000 ? at : null;            // never fire a reminder that was already past when it was set
+}
+function reminderItems(){
+  const now = Date.now(), items = [];
+  for (const x of D.tasks) {
+    const at = remindAt(x);
+    if (at === null || at < now - 2 * 3600e3 || at > now + 45 * 864e5) continue;
+    const r = +x.remind, pn = D.projects.length > 1 ? (D.projects.find(p => p.id === x.project)?.name || '') : '';
+    const lead = r === 0 ? 'Due now' : r === 1440 ? 'Due tomorrow' : r === 60 ? 'Due in 1 hour' : `Due in ${r} min`;
+    items.push({key:`${x.id}_${at}`, id:x.id, at, title:x.title, body:[lead + (x.time ? ` · ${fmtTime(x.time)}` : ''), pn].filter(Boolean).join(' · ')});
+  }
+  if (testAt > now - 15 * 60e3) items.push({key:`test_${testAt}`, id:'', at:testAt, title:'DARK-SATIN test reminder', body:'Background reminders are working ✓'});
+  return items.sort((a, b) => a.at - b.at).slice(0, 300);
+}
+const notifOpts = r => ({body:r.body, tag:r.key, icon:'logo-192.png', badge:'badge-96.png', data:{task:r.id}, actions:r.id ? [{action:'done', title:'Mark done'}] : []});
+// While the app is open, fire reminders right on time from here too (same tag, so no double alert).
+function scheduleLocal(){
+  fgTimers.forEach(clearTimeout); fgTimers = [];
+  if (!ready || !('Notification' in window) || Notification.permission !== 'granted' || !('serviceWorker' in navigator)) return;
+  const now = Date.now();
+  for (const r of reminderItems()) {
+    const ms = r.at - now; if (ms < 0 || ms > 6 * 3600e3 || !r.id) continue;
+    fgTimers.push(setTimeout(async () => {
+      try { const reg = await navigator.serviceWorker.ready; await reg.showNotification(r.title, notifOpts(r)); await setDoc(uref('meta', 'remindersSent'), {[r.key]: Date.now()}, {merge:true}); } catch (_) {}
+    }, ms));
+  }
+}
+const deviceId = (() => { try { let d = localStorage.getItem('ds.device'); if (!d) { d = uid_() + uid_(); localStorage.setItem('ds.device', d); } return d; } catch (_) { return 'device'; } })();
+const pushSupported = () => 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && !VAPID_PUBLIC_KEY.startsWith('__');
+const b64u = s => Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - s.length % 4) % 4)), c => c.charCodeAt(0));
+const deviceLabel = () => (/Android|iPhone|iPad|Windows|Macintosh|Linux/.exec(navigator.userAgent) || ['Device'])[0].replace('Macintosh', 'Mac');
+async function pushState(){
+  if (!pushSupported()) return 'unsupported';
+  if (Notification.permission === 'denied') return 'blocked';
+  const reg = await navigator.serviceWorker.getRegistration(), sub = reg && await reg.pushManager.getSubscription();
+  return sub && Notification.permission === 'granted' ? 'on' : 'off';
+}
+async function saveSub(sub){ await setDoc(uref('push', deviceId), {sub: JSON.parse(JSON.stringify(sub)), device: deviceLabel(), updated: Date.now()}); }
+async function pushEnable(){
+  if ((await Notification.requestPermission()) !== 'granted') throw new Error('denied');
+  const reg = await navigator.serviceWorker.ready, key = b64u(VAPID_PUBLIC_KEY);
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) {
+    try { sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:key}); }
+    catch (e) { const old = await reg.pushManager.getSubscription(); if (!old) throw e; await old.unsubscribe(); sub = await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:key}); }
+  }
+  await saveSub(sub); scheduleLocal();
+}
+async function pushDisable(){
+  const reg = 'serviceWorker' in navigator && await navigator.serviceWorker.getRegistration(), sub = reg && await reg.pushManager.getSubscription();
+  if (sub) await sub.unsubscribe();
+  if (user) await deleteDoc(uref('push', deviceId));
+  fgTimers.forEach(clearTimeout); fgTimers = [];
+}
+// Keep this phone's subscription fresh in the cloud each time the app opens.
+async function pushRefresh(){ try { if ((await pushState()) === 'on') saveSub(await (await navigator.serviceWorker.ready).pushManager.getSubscription()); } catch (_) {} }
+// "Add to calendar": Android opens the phone's Calendar app (any calendar app); elsewhere, Google Calendar on the web.
+function calendarLink(t){
+  const [y, m, d] = t.due.split('-').map(Number), allDay = !t.time;
+  const rr = {daily:'FREQ=DAILY', weekdays:'FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR', weekly:'FREQ=WEEKLY', monthly:'FREQ=MONTHLY'}[t.repeat] || '';
+  const details = [t.note, 'From DARK-SATIN'].filter(Boolean).join('\n');
+  let start, end;
+  if (allDay) { start = new Date(y, m - 1, d); end = new Date(y, m - 1, d + 1); }
+  else { const [h, mi] = t.time.split(':').map(Number); start = new Date(y, m - 1, d, h, mi); end = new Date(start.getTime() + 30 * 60000); }
+  const stamp = dt => ds(dt).replace(/-/g, '') + (allDay ? '' : 'T' + pad(dt.getHours()) + pad(dt.getMinutes()) + '00');
+  const p = {action:'TEMPLATE', text:t.title, dates:`${stamp(start)}/${stamp(end)}`, details, ctz:Intl.DateTimeFormat().resolvedOptions().timeZone};
+  if (rr) p.recur = 'RRULE:' + rr;
+  const web = 'https://calendar.google.com/calendar/render?' + new URLSearchParams(p);
+  if (!/Android/i.test(navigator.userAgent)) return web;
+  const e = encodeURIComponent;
+  const bt = allDay ? Date.UTC(y, m - 1, d) : start.getTime(), et = allDay ? Date.UTC(y, m - 1, d + 1) : end.getTime();
+  return `intent:#Intent;action=android.intent.action.INSERT;type=vnd.android.cursor.item/event;S.title=${e(t.title)};S.description=${e(details)};l.beginTime=${bt};l.endTime=${et};${allDay ? 'B.allDay=true;' : ''}${rr ? `S.rrule=${e(rr)};` : ''}S.browser_fallback_url=${e(web)};end`;
+}
+function remindSettingsHtml(){ return `<div class="acctbox"><span class="label">Notifications on this phone</span><p class="hint" id="remState" style="margin:4px 0 10px">Checking…</p><div class="acctbtns" id="remBtns"></div></div>`; }
+async function fillRemind(){
+  const st = await pushState(), s = $('#remState'), b = $('#remBtns'); if (!s) return;
+  s.textContent = {
+    unsupported: VAPID_PUBLIC_KEY.startsWith('__') ? 'Reminders are not set up for this app yet.' : "This browser can't show reminders. Open the installed app from Chrome on Android.",
+    blocked: 'Notifications are blocked. Allow them in Chrome → ⋮ → Settings → Site settings → Notifications, then come back.',
+    off: 'Pop up task reminders on time while DARK-SATIN is open. For reminders when it is closed, use 📅 Add to calendar on a task.',
+    on: 'On. Reminders pop up while DARK-SATIN is open. Use 📅 Add to calendar on a task for reminders when it is closed.'}[st];
+  b.innerHTML = st === 'off' ? '<button type="button" class="btn primary small" data-act="pushOn">Turn on</button>'
+    : st === 'on' ? '<button type="button" class="btn ghost small" data-act="pushTest">Send a test</button><button type="button" class="btn danger small" data-act="pushOff">Turn off</button>' : '';
+}
+function handleNotif(action, task){
+  const t = task && live(D.tasks, task); if (!t) return;
+  if (action === 'done') { if (!t.done) { const m = toggleTask(t); save(); render(); toast(m || 'Done ✓'); } return; }
+  S.tab = 'tasks'; render(); taskForm(t);
+}
+{ // opened from a notification tap?
+  const q = new URLSearchParams(location.search), d = q.get('done'), t = q.get('task');
+  if (d || t) { pendingNotif = {action: d ? 'done' : 'open', task: d || t}; history.replaceState(null, '', location.pathname); }
+}
+if ('serviceWorker' in navigator) navigator.serviceWorker.addEventListener('message', e => {
+  if (e.data?.type !== 'notif') return;
+  if (ready) handleNotif(e.data.action, e.data.task); else pendingNotif = {action:e.data.action, task:e.data.task};
+});
+
+/* ---------- install prompt ---------- */
+let installEvt = null;
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; if (ready && S.tab === 'home' && !$('#sheetBg').classList.contains('open')) render(); });
+addEventListener('appinstalled', () => { installEvt = null; toast('Installed. Open it from your Home screen.'); });
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+/* ---------- state & render ---------- */
+const S = {tab:'home', ym:monthOf(today()), tym:monthOf(today()), moneyView:'txns', jDate:today(), taskFilter:'today', proj:'all'};
+function render(){
+  if (!ready) return;
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === S.tab));
+  $('#view').innerHTML = ({home:vHome, money:vMoney, journal:vJournal, tasks:vTasks, trades:vTrades})[S.tab]();
+  $('#fab').hidden = S.tab === 'journal';
+  if (S.tab === 'journal' && !journalLocked()) bindJournal();
+}
+
+/* ---------- HOME ---------- */
+function vHome(){
+  const t = today(), bal = balances(), mt = monthTotals(monthOf(t));
+  const total = D.accounts.reduce((s,a) => s + (bal[a.id]||0), 0);
+  const due = D.tasks.filter(x => !x.done && x.due && x.due <= t).sort(byDue);
+  const j = D.journal[t];
+  const budgetRows = Object.entries(D.budgets).filter(([,l]) => l > 0)
+    .map(([c,l]) => ({c, s:mt.byCat[c]||0, l})).sort((a,b) => b.s/b.l - a.s/a.l).slice(0,4)
+    .map(r => barRow(r.c, r.s, r.l)).join('');
+  return `
+  <section class="hello"><div class="muted">${greet()}</div><h1>${fmtLong(t)}</h1></section>
+  <div class="card hero">
+    <span class="label">Total balance</span>
+    <div class="big ${total<0?'neg':''}">${money(total)}</div>
+    <div class="row2"><div><span class="label">In this month</span><b class="pos">${money(mt.inc)}</b></div><div><span class="label">Out this month</span><b class="neg">${money(mt.exp)}</b></div></div>
+  </div>
+  <div class="card">
+    <div class="card-h"><h3>Due today</h3><button class="link" data-act="tab" data-tab="tasks">All tasks →</button></div>
+    ${due.length ? due.slice(0,6).map(taskRow).join('') + (due.length>6 ? `<div class="more">+${due.length-6} more</div>` : '') : '<p class="empty">Nothing due. Tap + to add a task.</p>'}
+  </div>
+  <div class="card">
+    <div class="card-h"><h3>Journal</h3>${j && !j.locked && j.mood ? `<span style="font-size:20px">${MOODS[j.mood-1]}</span>` : ''}</div>
+    ${journalLocked() ? `<button class="btn ghost" style="width:100%" data-act="tab" data-tab="journal">🔒 Unlock journal</button>` : j && j.text.trim()
+      ? `<p class="jsnip">${esc(j.text.slice(0,180))}${j.text.length>180?'…':''}</p><button class="link" style="margin-top:8px" data-act="jopen" data-d="${t}">Continue writing →</button>`
+      : `<button class="btn ghost" style="width:100%" data-act="jopen" data-d="${t}">Write today's entry</button>`}
+  </div>
+  ${D.alloc && allocBase(monthOf(t)) > 0 ? `<div class="card"><div class="card-h"><h3>This month's plan</h3><button class="link" data-act="goreports">Reports →</button></div>${allocRows(monthOf(t), true)}</div>` : ''}
+  ${budgetRows ? `<div class="card"><div class="card-h"><h3>Budgets</h3><button class="link" data-act="gobudgets">Details →</button></div>${budgetRows}</div>` : ''}
+  ${installEvt ? `<div class="card nudge"><p><b>Install DARK-SATIN</b>Opens from your Home screen, full screen, even offline.</p><button class="btn ghost small" data-act="install">Install</button></div>` : ''}`;
+}
+
+/* ---------- MONEY (always derived from the ledger) ---------- */
+function balances(){
+  const b = {}; D.accounts.forEach(a => b[a.id] = +a.opening || 0);
+  D.transactions.forEach(t => {
+    const a = +t.amount || 0;
+    if (t.type === 'income') b[t.account] = (b[t.account]||0) + a;
+    else if (t.type === 'expense') b[t.account] = (b[t.account]||0) - a;
+    else if (t.type === 'transfer') { b[t.account] = (b[t.account]||0) - a; b[t.to] = (b[t.to]||0) + a; }
+  });
+  return b;
+}
+function monthTotals(ym){
+  let inc = 0, exp = 0; const byCat = {};
+  D.transactions.forEach(t => {
+    if (monthOf(t.date) !== ym) return;
+    const a = +t.amount || 0;
+    if (t.type === 'income') inc += a;
+    else if (t.type === 'expense') { exp += a; byCat[t.category] = (byCat[t.category]||0) + a; }
+  });
+  return {inc, exp, byCat};
+}
+function vMoney(){
+  const bal = balances(), mt = monthTotals(S.ym), cm = monthOf(today());
+  const accts = D.accounts.map(a => `<button class="acct" data-act="editAccount" data-id="${a.id}"><small>${esc(a.name)}</small><b class="${(bal[a.id]||0)<0?'neg':''}">${money(bal[a.id])}</b></button>`).join('')
+    + `<button class="acct add" data-act="newAccount" aria-label="Add account">+</button>`;
+  const segBtn = (v, l) => `<button class="${S.moneyView===v?'on':''}" data-act="mview" data-v="${v}">${l}</button>`;
+  let h = `<div class="chips">${accts}</div>
+  ${S.moneyView === 'recur' ? '' : `<div class="datebar"><button data-act="month" data-n="-1" aria-label="Previous month">‹</button><div><b>${monthName(S.ym)}</b><small>${S.ym===cm?'This month':'&nbsp;'}</small></div><button data-act="month" data-n="1" ${S.ym>=cm?'disabled':''} aria-label="Next month">›</button></div>
+  <div class="sum"><div><span class="label">In</span><b class="pos">${money(mt.inc)}</b></div><div><span class="label">Out</span><b class="neg">${money(mt.exp)}</b></div><div><span class="label">Net</span><b>${money(mt.inc-mt.exp)}</b></div></div>`}
+  <div class="seg">${segBtn('txns','Entries')}${segBtn('budgets','Budgets')}${segBtn('reports','Reports')}${segBtn('recur','Recurring')}</div>`;
+  if (S.moneyView === 'reports') h += vReports();
+  else if (S.moneyView === 'recur') {
+    const rs = D.recurring.slice().sort((a,b) => (a.next||'').localeCompare(b.next||''));
+    if (!rs.length) h += `<p class="empty card">No recurring entries yet. When you add an entry, set <b>Repeat</b> to Monthly (or daily, weekly, yearly) for rent, salary, SIPs and subscriptions.</p>`;
+    else {
+      const mo = rs.reduce((s, r) => { const k = {daily:30.4, weekly:4.35, monthly:1, yearly:1/12}[r.freq] || 1; const sign = r.tpl.type === 'income' ? 1 : r.tpl.type === 'expense' ? -1 : 0; return s + sign * r.tpl.amount * k; }, 0);
+      h += `<p class="hint" style="margin:0 2px 10px">About ${money(Math.abs(mo))} a month ${mo >= 0 ? 'in' : 'out'} from these, on average.</p>`;
+      h += rs.map(ruleRow).join('');
+    }
+  } else if (S.moneyView === 'txns') {
+    const cf = S.catFilter;
+    if (!cf) h += `<div class="improw"><button class="link" data-act="openImport">⇪ Import bank statement</button></div>`;
+    const txs = D.transactions.filter(t => monthOf(t.date) === S.ym && (!cf || (t.type === 'expense' && t.category === cf))).sort((a,b) => b.date.localeCompare(a.date) || b.created - a.created);
+    if (cf) h += `<div class="chips" style="margin-bottom:10px"><button class="chip on" data-act="clearCat">${esc(cf)} · ${money(txs.reduce((s,t) => s + t.amount, 0))} ✕</button></div>`;
+    if (!txs.length) h += `<p class="empty card">No ${cf ? esc(cf) + ' ' : ''}entries in ${monthName(S.ym)}.${cf ? '' : ' Tap + to add one.'}</p>`;
+    else { let cur = null; txs.forEach(t => { if (t.date !== cur) { cur = t.date; h += `<div class="dgroup">${relLabel(t.date)}</div>`; } h += txRow(t); }); }
+  } else {
+    const cats = [...new Set([...D.categories.expense, ...Object.keys(mt.byCat), ...Object.keys(D.budgets)])];
+    const rows = cats.map(c => ({c, s:mt.byCat[c]||0, l:D.budgets[c]||0}))
+      .sort((a,b) => (b.l?1:0) - (a.l?1:0) || (a.l && b.l ? b.s/b.l - a.s/a.l : b.s - a.s));
+    const totalB = rows.reduce((s,r) => s + r.l, 0), spentB = rows.filter(r => r.l).reduce((s,r) => s + r.s, 0);
+    if (totalB) {
+      const p = Math.min(spentB/totalB, 1), cls = spentB > totalB ? 'over' : p > .8 ? 'warn' : '';
+      h += `<div class="card"><div class="bt"><span>All budgets</span><span>${money(spentB)} <small>/ ${money(totalB)}</small></span></div><div class="bar ${cls}"><i style="width:${p*100}%"></i></div><p class="hint">${spentB>totalB ? money(spentB-totalB)+' over' : money(totalB-spentB)+' left'} in ${monthName(S.ym)}</p></div>`;
+    } else h += `<p class="hint" style="margin:0 2px 10px">Tap a category to set a monthly limit.</p>`;
+    h += `<div class="card">${rows.map(r => barRow(r.c, r.s, r.l)).join('')}</div>`;
+  }
+  return h;
+}
+function txRow(t){
+  const an = id => D.accounts.find(a => a.id === id)?.name || 'Deleted account';
+  const tr = t.type === 'transfer';
+  const title = tr ? `${an(t.account)} → ${an(t.to)}` : t.category;
+  const sub = [t.note, tr ? 'Transfer' : an(t.account)].filter(Boolean).join(' · ');
+  const amt = tr ? money(t.amount) : (t.type === 'income' ? '+' : '−') + money(t.amount);
+  return `<button class="tx" data-act="editTxn" data-id="${t.id}"><span class="ic">${tr ? '⇄' : esc((t.category||'?')[0])}</span><span class="m"><b>${esc(title)}${t.rule ? ' <span class="rp">↻</span>' : ''}</b><small>${esc(sub)}</small></span><span class="a ${t.type==='income'?'pos':''}">${amt}</span></button>`;
+}
+function ruleRow(r){
+  const t = r.tpl, an = id => D.accounts.find(a => a.id === id)?.name || 'Deleted account';
+  const tr = t.type === 'transfer';
+  const title = t.note || (tr ? `${an(t.account)} → ${an(t.to)}` : t.category);
+  const amt = tr ? money(t.amount) : (t.type === 'income' ? '+' : '−') + money(t.amount);
+  return `<button class="tx" data-act="editRule" data-id="${r.id}"><span class="ic">↻</span><span class="m"><b>${esc(title)}</b><small>${FREQ[r.freq]} · next ${esc(relLabel(r.next))}${tr ? '' : ' · ' + esc(an(t.account))}</small></span><span class="a ${t.type==='income'?'pos':''}">${amt}</span></button>`;
+}
+const quickLabel = q => `${q.note || q.category || 'Transfer'} ${money(q.amount)}`;
+function barRow(cat, spent, limit){
+  const p = limit ? Math.min(spent/limit, 1) : 0, over = limit && spent > limit, cls = over ? 'over' : p > .8 ? 'warn' : '';
+  return `<div class="brow" data-act="editBudget" data-cat="${esc(cat)}"><div class="bt"><span>${esc(cat)}</span><span class="${over?'neg':''}">${money(spent)}${limit ? ` <small>/ ${money(limit)}</small>` : ''}</span></div>${limit ? `<div class="bar ${cls}"><i style="width:${p*100}%"></i></div>` : ''}</div>`;
+}
+
+/* ---------- REPORTS & ALLOCATION ---------- */
+const pct = x => (x === 0 ? '0' : (x * 100).toFixed(Math.abs(x) < 0.1 ? 1 : 0)) + '%';
+const shortMoney = n => { const a = Math.abs(n); return (n < 0 ? '−' : '') + '₹' + (a >= 1e7 ? (a/1e7).toFixed(1).replace(/\.0$/,'') + 'Cr' : a >= 1e5 ? (a/1e5).toFixed(1).replace(/\.0$/,'') + 'L' : a >= 1e3 ? (a/1e3).toFixed(1).replace(/\.0$/,'') + 'k' : Math.round(a)); };
+const shortMonth = ym => { const [y,m] = ym.split('-').map(Number); return new Date(y, m-1, 1).toLocaleDateString('en-IN', {month:'short'}); };
+
+// How much went into each bucket this month: expenses by category, plus money moved (transferred) into its accounts.
+function allocActuals(ym){
+  const A = D.alloc, by = {}, cat = {}, acc = {};
+  A.buckets.forEach(b => { by[b.id] = 0; if (b.kind === 'save') (b.accts||[]).forEach(x => acc[x] = b.id); else (b.cats||[]).forEach(c => cat[c] = b.id); });
+  let other = 0;
+  D.transactions.forEach(t => {
+    if (monthOf(t.date) !== ym) return;
+    const a = +t.amount || 0;
+    if (t.type === 'expense') { const o = cat[t.category]; if (o) by[o] += a; else other += a; }
+    else if (t.type === 'transfer') {
+      const into = acc[t.to], outOf = acc[t.account];
+      if (into && into !== outOf) by[into] += a;          // e.g. Bank → Zerodha counts for Trading
+      if (outOf && outOf !== into) by[outOf] -= a;        // taking money back out reduces it
+    }
+  });
+  return {by, other};
+}
+function allocBase(ym){ return D.alloc.base === 'fixed' ? (+D.alloc.fixed || 0) : monthTotals(ym).inc; }
+function allocRows(ym, compact){
+  const base = allocBase(ym), {by, other} = allocActuals(ym);
+  let h = D.alloc.buckets.map(b => {
+    const plan = base * (+b.pct || 0) / 100, act = by[b.id] || 0, p = plan > 0 ? act / plan : (act > 0 ? 1 : 0);
+    const save = b.kind === 'save';
+    const cls = save ? (p >= 1 ? 'done' : '') : (act > plan ? 'over' : p > .85 ? 'warn' : '');
+    const note = save
+      ? (plan <= 0 ? '' : act >= plan ? 'Target reached' : `${money(plan - act)} to go`)
+      : (plan <= 0 ? '' : act > plan ? `${money(act - plan)} over` : `${money(plan - act)} left`);
+    return `<div class="brow alloc" data-act="${compact ? 'goreports' : 'editAlloc'}"><div class="bt"><span>${esc(b.name)} <small>${+b.pct || 0}%</small></span><span class="${!save && act > plan ? 'neg' : ''}">${money(act)} <small>/ ${money(plan)}</small></span></div>
+      <div class="bar ${cls}"><i style="width:${Math.max(0, Math.min(p, 1)) * 100}%"></i></div>${compact ? '' : `<p class="hint">${save ? 'Saved' : 'Spent'} ${plan > 0 ? pct(Math.max(act, 0) / plan) + ' of plan' : ''}${note ? ' · ' + note : ''}</p>`}</div>`;
+  }).join('');
+  if (!compact && other > 0) h += `<p class="hint" style="padding-top:8px;border-top:1px solid var(--line)">${money(other)} spent in categories not in any bucket. <button class="link" data-act="editAlloc">Edit plan</button></p>`;
+  return h;
+}
+function trendChart(endYm){
+  const months = Array.from({length:6}, (_, i) => addMonths(endYm, i - 5)), data = months.map(m => ({m, ...monthTotals(m)}));
+  const max = Math.max(1, ...data.map(d => Math.max(d.inc, d.exp)));
+  const step = (() => { const raw = max / 3, mag = 10 ** Math.floor(Math.log10(raw)), n = raw / mag; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10) * mag; })();
+  const top = step * Math.ceil(max / step);
+  const W = 340, H = 168, L = 40, B = 22, T = 8, cw = (W - L) / 6, bw = Math.min(16, cw / 2 - 6), ph = H - B - T;
+  const y = v => T + ph - v / top * ph;
+  const bar = (x, v, cls) => { const h = v / top * ph; if (h < 0.5) return ''; const r = Math.min(4, h, bw / 2), yy = T + ph - h;
+    return `<path class="${cls}" d="M${x},${T+ph} V${yy+r} Q${x},${yy} ${x+r},${yy} H${x+bw-r} Q${x+bw},${yy} ${x+bw},${yy+r} V${T+ph} Z"/>`; };
+  let g = '';
+  for (let v = 0; v <= top + 1e-9; v += step) g += `<line class="grid" x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${L-6}" y="${y(v)+4}" text-anchor="end">${v ? shortMoney(v) : '0'}</text>`;
+  data.forEach((d, i) => {
+    const cx = L + cw * i + cw / 2, sel = d.m === endYm;
+    g += `<g class="${sel ? 'sel' : 'dim'}">${bar(cx - bw - 1, d.inc, 'b-in')}${bar(cx + 1, d.exp, 'b-out')}</g>`;
+    g += `<text class="ax ${sel ? 'axsel' : ''}" x="${cx}" y="${H - 6}" text-anchor="middle">${shortMonth(d.m)}</text>`;
+    g += `<rect class="hit" x="${L + cw * i}" y="0" width="${cw}" height="${H}" data-act="pickMonth" data-m="${d.m}"><title>${monthName(d.m)}: in ${money(d.inc)}, out ${money(d.exp)}</title></rect>`;
+  });
+  return `<div class="legend"><span><i class="sw sw-in"></i>Income</span><span><i class="sw sw-out"></i>Spending</span><span class="muted" style="margin-left:auto">Tap a month</span></div>
+    <svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Income and spending, last 6 months">${g}</svg>
+    <table class="mini-t"><tr class="th"><td></td><td>In</td><td>Out</td><td>Saved</td></tr>${data.slice().reverse().map(d => `<tr class="${d.m === endYm ? 'on' : ''}" data-act="pickMonth" data-m="${d.m}"><td>${shortMonth(d.m)}</td><td>${money(d.inc)}</td><td>${money(d.exp)}</td><td class="${d.inc - d.exp < 0 ? 'neg' : ''}">${d.inc ? pct((d.inc - d.exp) / d.inc) : '—'}</td></tr>`).join('')}</table>`;
+}
+function vReports(){
+  const ym = S.ym, mt = monthTotals(ym), pv = monthTotals(addMonths(ym, -1));
+  const net = mt.inc - mt.exp, rate = mt.inc > 0 ? net / mt.inc : null, prate = pv.inc > 0 ? (pv.inc - pv.exp) / pv.inc : null;
+  const delta = rate !== null && prate !== null ? Math.round((rate - prate) * 100) : null;
+  let h = `<div class="card hero"><span class="label">Saved in ${monthName(ym)}</span>
+    <div class="big ${net < 0 ? 'neg' : ''}" style="margin-bottom:4px">${money(net)}</div>
+    <p class="muted" style="font-size:14px">${rate === null ? 'Add income for this month to see your savings rate.' : `<b style="color:var(--tx)">${pct(rate)}</b> of income${delta !== null && delta !== 0 ? ` · ${delta > 0 ? '▲' : '▼'} ${Math.abs(delta)} pts vs ${shortMonth(addMonths(ym,-1))}` : ''}`}</p></div>`;
+  // allocation
+  h += `<div class="card"><div class="card-h"><h3>Allocation plan</h3>${D.alloc ? '<button class="link" data-act="editAlloc">Edit</button>' : ''}</div>`;
+  if (!D.alloc) h += `<p class="empty" style="margin-bottom:12px">Split your income into buckets, like 50% needs, 30% wants, 20% savings, and see how each month really went.</p><button class="btn ghost" style="width:100%" data-act="editAlloc">Set up a plan</button>`;
+  else {
+    const base = allocBase(ym);
+    h += `<p class="hint" style="margin:-4px 0 6px">Based on ${D.alloc.base === 'fixed' ? 'a fixed ' + money(base) + ' a month' : money(base) + ' income this month'}</p>`;
+    h += base > 0 || D.alloc.base === 'fixed' ? allocRows(ym, false) : `<p class="empty">No income recorded in ${monthName(ym)} yet, so there's nothing to split. You can also plan from a fixed monthly amount.</p>`;
+  }
+  h += `</div>`;
+  // categories
+  const cats = Object.entries(mt.byCat).sort((a, b) => b[1] - a[1]), maxC = cats.length ? cats[0][1] : 1;
+  h += `<div class="card"><div class="card-h"><h3>Spending by category</h3><span class="muted" style="font-size:13px">${money(mt.exp)}</span></div>`;
+  h += cats.length ? cats.map(([c, v]) => {
+    const was = pv.byCat[c] || 0, ch = was ? (v - was) / was : null;
+    const chg = ch === null ? `<span class="muted">new</span>` : Math.abs(ch) < 0.005 ? '' : `<span class="${ch > 0 ? 'up' : 'down'}">${ch > 0 ? '▲' : '▼'} ${pct(Math.abs(ch))}</span>`;
+    return `<button class="crow" data-act="catTx" data-cat="${esc(c)}"><div class="bt"><span>${esc(c)} <small>${pct(v / mt.exp)}</small></span><span>${money(v)}</span></div>
+      <div class="cbar"><i style="width:${v / maxC * 100}%"></i></div><div class="cmeta">${chg}${was ? `<span class="muted">${shortMonth(addMonths(ym,-1))}: ${money(was)}</span>` : ''}</div></button>`;
+  }).join('') : `<p class="empty">No spending in ${monthName(ym)}.</p>`;
+  h += `</div>`;
+  // trend
+  h += `<div class="card"><div class="card-h"><h3>Last 6 months</h3></div>${trendChart(ym)}</div>`;
+  return h;
+}
+let draft = null;
+function suggestAlloc(){
+  const ex = D.categories.expense, NEED = ['Rent','Bills','Groceries','Transport','Health','EMI','Insurance','Education','Family'];
+  const needs = ex.filter(c => NEED.includes(c)), wants = ex.filter(c => !needs.includes(c));
+  return {base:'income', fixed:0, buckets:[
+    {id:uid_(), name:'Needs', pct:50, kind:'spend', cats:needs, accts:[]},
+    {id:uid_(), name:'Wants', pct:30, kind:'spend', cats:wants, accts:[]},
+    {id:uid_(), name:'Savings', pct:20, kind:'save', cats:[], accts:D.accounts.filter(a => a.type === 'investment').map(a => a.id)}]};
+}
+function allocForm(){ draft = JSON.parse(JSON.stringify(D.alloc || suggestAlloc())); drawAlloc(); }
+function allocTotal(){ return draft.buckets.reduce((s, b) => s + (+b.pct || 0), 0); }
+function allocTotalHtml(){ const t = allocTotal(); return `Total <b>${t}%</b>${t < 100 ? ` · ${100 - t}% not planned` : t > 100 ? ' · over 100%, lower a bucket' : ' · all of it planned'}`; }
+function drawAlloc(){
+  const sc = $('#sheet').scrollTop, owner = {};
+  draft.buckets.forEach(b => b.kind !== 'save' && b.cats.forEach(c => owner[c] = b.id));
+  const t = allocTotal();
+  openSheet(`<form id="sf">${head('Allocation plan')}
+    <p class="hint" style="margin:-6px 2px 14px">Spending buckets count expenses in their categories. Saving buckets count money you <b>transfer</b> into their accounts, e.g. Bank → Zerodha for trading capital.</p>
+    <span class="label" style="margin:0 2px 6px">Split from</span>
+    <div class="seg"><button type="button" class="${draft.base!=='fixed'?'on':''}" data-act="allocBase" data-v="income">Each month's income</button><button type="button" class="${draft.base==='fixed'?'on':''}" data-act="allocBase" data-v="fixed">Fixed amount</button></div>
+    ${draft.base === 'fixed' ? `<label class="f"><span>Monthly amount to split</span><input data-af="fixed" type="number" inputmode="decimal" min="0" value="${draft.fixed || ''}" placeholder="₹0"></label>` : ''}
+    ${draft.buckets.map((b, i) => `<div class="bucket">
+      <div class="bhead"><input class="bname" data-af="name" data-i="${i}" value="${esc(b.name)}" placeholder="Bucket name" autocomplete="off"><label class="pctbox"><input data-af="pct" data-i="${i}" type="number" inputmode="numeric" min="0" max="100" value="${b.pct}">%</label><button type="button" class="x" data-act="allocDel" data-i="${i}" aria-label="Remove bucket">✕</button></div>
+      <div class="seg sm"><button type="button" class="${b.kind!=='save'?'on':''}" data-act="allocKind" data-i="${i}" data-v="spend">Spending</button><button type="button" class="${b.kind==='save'?'on':''}" data-act="allocKind" data-i="${i}" data-v="save">Saving / investing</button></div>
+      ${b.kind !== 'save'
+        ? `<span class="label">Categories</span><div class="chipset">${D.categories.expense.map(c => `<button type="button" class="chip ${owner[c]===b.id?'on':''} ${owner[c] && owner[c]!==b.id ? 'taken' : ''}" data-act="allocCat" data-i="${i}" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div>`
+        : `<span class="label">Money moved into</span><div class="chipset">${D.accounts.map(a => `<button type="button" class="chip ${b.accts.includes(a.id)?'on':''}" data-act="allocAcct" data-i="${i}" data-a="${a.id}">${esc(a.name)}</button>`).join('')}</div>
+           ${D.accounts.length < 3 ? '<p class="hint">Tip: add accounts like "Zerodha" or "Savings" in Money, then transfer into them.</p>' : ''}`}
+    </div>`).join('')}
+    <button type="button" class="btn ghost" style="width:100%;margin-bottom:12px" data-act="allocAdd">+ Add bucket</button>
+    <p class="alloc-total ${t === 100 ? 'ok' : t > 100 ? 'bad' : ''}" id="allocTotal">${allocTotalHtml()}</p>
+    <div class="actions">${D.alloc ? '<button class="btn danger" value="del">Remove</button>' : ''}<button class="btn primary" value="save">Save plan</button></div></form>`,
+  (fd, sub) => {
+    if (sub && sub.value === 'del') { if (!confirm('Remove the allocation plan?')) return false; D.alloc = null; toast('Plan removed'); return; }
+    if (!draft.buckets.length) { toast('Add at least one bucket'); return false; }
+    if (draft.buckets.some(b => !b.name.trim())) { toast('Give every bucket a name'); return false; }
+    if (allocTotal() > 100) { toast('Buckets add up to more than 100%'); return false; }
+    if (draft.base === 'fixed' && !(+draft.fixed > 0)) { toast('Enter the monthly amount'); return false; }
+    draft.buckets.forEach(b => { b.name = b.name.trim(); b.pct = +b.pct || 0; b.cats = b.cats.filter(c => D.categories.expense.includes(c)); b.accts = b.accts.filter(x => D.accounts.some(a => a.id === x)); });
+    D.alloc = draft; draft = null; toast('Plan saved');
+  });
+  $('#sheet').scrollTop = sc;
+}
+document.addEventListener('input', e => {
+  const f = e.target.dataset?.af; if (!f || !draft) return;
+  if (f === 'fixed') draft.fixed = parseFloat(e.target.value) || 0;
+  else { const b = draft.buckets[+e.target.dataset.i]; if (!b) return; b[f] = f === 'pct' ? (parseFloat(e.target.value) || 0) : e.target.value; }
+  const el = $('#allocTotal'); if (el) { const t = allocTotal(); el.innerHTML = allocTotalHtml(); el.className = 'alloc-total ' + (t === 100 ? 'ok' : t > 100 ? 'bad' : ''); }
+});
+
+/* ---------- TRADING ---------- */
+// P&L of one entry. A "Day P&L" entry is just the number; a trade is (exit − entry) × qty, flipped for shorts, minus charges.
+function tradePnl(t){
+  if (t.mode === 'pnl') return +t.pnl || 0;
+  if (t.exit === '' || t.exit === null || t.exit === undefined || isNaN(+t.exit)) return null;      // still open
+  return Math.round(((+t.exit - +t.entry) * (+t.qty || 0) * (t.side === 'short' ? -1 : 1) - (+t.charges || 0)) * 100) / 100;
+}
+const pnlDate = t => (t.kind === 'swing' && t.exitDate) || t.date;          // swing P&L counts on the day you exit
+const signMoney = n => (n > 0 ? '+' : n < 0 ? '−' : '') + money(Math.abs(n));
+const signShort = n => (n > 0 ? '+' : n < 0 ? '−' : '') + shortMoney(Math.abs(n)).replace('−', '');
+function tradeStats(filter){
+  const days = {}, wins = [], losses = [];
+  for (const t of D.trades) {
+    const p = tradePnl(t); if (p === null) continue;
+    const d = pnlDate(t); if (filter && !filter(d)) continue;
+    (days[d] ||= {pnl:0, n:0}).pnl += p; days[d].n++;
+    if (t.mode !== 'pnl') (p > 0 ? wins : p < 0 ? losses : []).push(p);
+  }
+  const dv = Object.entries(days), net = dv.reduce((s, [, v]) => s + v.pnl, 0);
+  const sw = wins.reduce((a, b) => a + b, 0), sl = losses.reduce((a, b) => a + b, 0);
+  const best = dv.reduce((b, x) => !b || x[1].pnl > b[1].pnl ? x : b, null), worst = dv.reduce((b, x) => !b || x[1].pnl < b[1].pnl ? x : b, null);
+  return {days, net, trades: wins.length + losses.length, wins: wins.length, losses: losses.length,
+    winRate: wins.length + losses.length ? wins.length / (wins.length + losses.length) : null,
+    avgWin: wins.length ? sw / wins.length : null, avgLoss: losses.length ? sl / losses.length : null,
+    pf: sl ? sw / Math.abs(sl) : null, green: dv.filter(([, v]) => v.pnl > 0).length, red: dv.filter(([, v]) => v.pnl < 0).length,
+    best: best && best[1].pnl > 0 ? best : null, worst: worst && worst[1].pnl < 0 ? worst : null};
+}
+function tradeTitle(t){ return t.mode === 'pnl' ? 'Day P&L' : `${t.symbol || 'Trade'}`; }
+function tradeSub(t){
+  if (t.mode === 'pnl') return t.note || '';
+  const bits = [t.kind === 'swing' ? 'Swing' : 'Intraday', t.side === 'short' ? 'Short' : 'Long', `${+t.qty || 0} × ${money(+t.entry || 0)}${tradePnl(t) === null ? '' : ' → ' + money(+t.exit)}`];
+  return bits.join(' · ') + (t.note ? ' · ' + t.note : '');
+}
+function tradeRow(t){
+  const p = tradePnl(t);
+  return `<button class="tx" data-act="editTrade" data-id="${t.id}"><span class="ic">${t.mode === 'pnl' ? '₹' : esc((t.symbol || '?').slice(0, 2))}</span><span class="m"><b>${esc(tradeTitle(t))}</b><small>${esc(tradeSub(t))}</small></span><span class="a ${p > 0 ? 'pos' : p < 0 ? 'neg' : 'muted'}">${p === null ? 'Open' : signMoney(p)}</span></button>`;
+}
+// Mood (from the journal) against that day's P&L, all time.
+function moodVsPnl(){
+  const st = tradeStats(), rows = [1, 2, 3, 4, 5].map(m => ({m, days:0, pnl:0, green:0}));
+  for (const [d, v] of Object.entries(st.days)) { const j = D.journal[d]; if (!j || j.locked || !j.mood) continue; const r = rows[j.mood - 1]; r.days++; r.pnl += v.pnl; if (v.pnl > 0) r.green++; }
+  return rows.filter(r => r.days).map(r => ({...r, avg: r.pnl / r.days}));
+}
+function calendarHtml(ym, st){
+  const [y, m] = ym.split('-').map(Number), first = new Date(y, m - 1, 1), n = new Date(y, m, 0).getDate();
+  const lead = (first.getDay() + 6) % 7, t = today();
+  const maxAbs = Math.max(1, ...Object.values(st.days).map(v => Math.abs(v.pnl)));
+  let h = '<div class="cal">' + ['M','T','W','T','F','S','S'].map(x => `<div class="cal-h">${x}</div>`).join('') + '<div></div>'.repeat(lead);
+  for (let d = 1; d <= n; d++) {
+    const ds_ = `${ym}-${pad(d)}`, v = st.days[ds_], j = D.journal[ds_], mood = j && !j.locked && j.mood ? MOODS[j.mood - 1] : '';
+    let style = '', cls = 'cal-d' + (ds_ === t ? ' today' : '') + (ds_ > t ? ' future' : '');
+    if (v && v.pnl) { const k = Math.round(22 + 60 * Math.min(1, Math.abs(v.pnl) / maxAbs)); style = `background:color-mix(in srgb, var(${v.pnl > 0 ? '--c-in' : '--c-out'}) ${k}%, var(--s1))`; cls += k > 55 ? ' strong' : ''; }
+    h += `<button class="${cls}" style="${style}" data-act="tradeDay" data-d="${ds_}"><span class="cd">${d}</span>${mood ? `<span class="cm">${mood}</span>` : ''}${v ? `<span class="cp">${v.pnl ? signShort(v.pnl) : '0'}</span>` : ''}</button>`;
+  }
+  return h + '</div><div class="legend" style="margin-top:8px"><span><i class="sw sw-in"></i>Profit day</span><span><i class="sw sw-out"></i>Loss day</span><span class="muted" style="margin-left:auto">Tap a day</span></div>';
+}
+function vTrades(){
+  const ym = S.tym, cm = monthOf(today()), st = tradeStats(d => monthOf(d) === ym);
+  const open = D.trades.filter(t => t.mode !== 'pnl' && tradePnl(t) === null).sort((a, b) => a.date.localeCompare(b.date));
+  const tile = (l, v, cls = '') => `<div><span class="label">${l}</span><b class="${cls}">${v}</b></div>`;
+  let h = `<div class="datebar"><button data-act="tmonth" data-n="-1" aria-label="Previous month">‹</button><div><b>${monthName(ym)}</b><small>${ym === cm ? 'This month' : '&nbsp;'}</small></div><button data-act="tmonth" data-n="1" ${ym >= cm ? 'disabled' : ''} aria-label="Next month">›</button></div>
+  <div class="card hero"><div class="card-h" style="margin-bottom:0"><span class="label">Net P&L</span><button class="link" data-act="tradeSettings">⚙ Settings</button></div>
+    <div class="big ${st.net < 0 ? 'neg' : st.net > 0 ? 'pos' : ''}" style="margin-bottom:4px">${signMoney(st.net)}</div>
+    <p class="muted" style="font-size:14px">${st.trades ? `${st.trades} trade${st.trades > 1 ? 's' : ''} · <b style="color:var(--tx)">${pct(st.winRate)}</b> win rate · ` : ''}${st.green + st.red ? `${st.green} green, ${st.red} red day${st.red === 1 ? '' : 's'}` : 'No closed trades yet this month'}</p></div>
+  <div class="sum s6">${tile('Avg win', st.avgWin === null ? '—' : signMoney(st.avgWin), 'pos')}${tile('Avg loss', st.avgLoss === null ? '—' : signMoney(st.avgLoss), 'neg')}${tile('Profit factor', st.pf === null ? (st.wins ? '∞' : '—') : st.pf.toFixed(2))}
+    ${tile('Best day', st.best ? signShort(st.best[1].pnl) + ` <small>${parseD(st.best[0]).getDate()}</small>` : '—', 'pos')}${tile('Worst day', st.worst ? signShort(st.worst[1].pnl) + ` <small>${parseD(st.worst[0]).getDate()}</small>` : '—', 'neg')}${tile('Win / loss', `${st.wins} / ${st.losses}`)}</div>
+  <div class="card"><div class="card-h"><h3>P&L calendar</h3></div>${calendarHtml(ym, st)}</div>`;
+  // mood vs P&L
+  h += `<div class="card"><div class="card-h"><h3>Mood vs P&L</h3><span class="muted" style="font-size:12px">all time</span></div>`;
+  if (journalLocked()) h += `<p class="empty">Unlock your journal to compare your mood with your results. <button class="link" data-act="tab" data-tab="journal">Unlock →</button></p>`;
+  else {
+    const mv = moodVsPnl();
+    if (mv.reduce((s, r) => s + r.days, 0) < 3) h += `<p class="empty">Set your mood in Journal on trading days. After a few days you'll see whether your mood affects your results.</p>`;
+    else {
+      const mx = Math.max(1, ...mv.map(r => Math.abs(r.avg)));
+      h += mv.slice().reverse().map(r => `<div class="mrow"><span class="me">${MOODS[r.m - 1]}</span><div class="mbar"><i class="${r.avg >= 0 ? 'up' : 'dn'}" style="width:${Math.abs(r.avg) / mx * 50}%"></i></div><span class="mv ${r.avg < 0 ? 'neg' : 'pos'}">${signShort(r.avg)}<small>${r.days} day${r.days > 1 ? 's' : ''}</small></span></div>`).join('');
+      const ok = mv.filter(r => r.days >= 2);
+      if (ok.length >= 2) { const b = ok.reduce((a, r) => r.avg > a.avg ? r : a), w = ok.reduce((a, r) => r.avg < a.avg ? r : a);
+        if (b.m !== w.m) h += `<p class="hint" style="margin-top:10px">On ${MOODS[b.m - 1]} days you average <b>${signMoney(b.avg)}</b>. On ${MOODS[w.m - 1]} days, <b>${signMoney(w.avg)}</b>.</p>`; }
+      h += `<p class="hint">Average P&L per trading day, by the mood you logged that day.</p>`;
+    }
+  }
+  h += `</div>`;
+  if (open.length) h += `<div class="card"><div class="card-h"><h3>Open positions</h3><span class="muted" style="font-size:12px">${open.length}</span></div>${open.map(t => `<button class="crow" data-act="editTrade" data-id="${t.id}"><div class="bt"><span>${esc(t.symbol)} <small>${t.side === 'short' ? 'Short' : 'Long'} · since ${esc(relLabel(t.date))}</small></span><span>${+t.qty || 0} × ${money(+t.entry || 0)}</span></div></button>`).join('')}</div>`;
+  const list = D.trades.filter(t => monthOf(pnlDate(t)) === ym && tradePnl(t) !== null).sort((a, b) => pnlDate(b).localeCompare(pnlDate(a)) || b.created - a.created);
+  h += `<h3 style="margin:18px 2px 4px">Closed this month</h3>`;
+  if (!list.length) h += `<p class="empty card">Nothing yet. Tap + to log a trade or a day's P&L.</p>`;
+  else { let cur = null; list.forEach(t => { const d = pnlDate(t); if (d !== cur) { cur = d; const v = st.days[d]; h += `<div class="dgroup">${relLabel(d)}<span class="${v.pnl < 0 ? 'neg' : 'pos'}" style="float:right">${signMoney(v.pnl)}</span></div>`; } h += tradeRow(t); }); }
+  return h;
+}
+function tradeDaySheet(d){
+  const items = D.trades.filter(t => pnlDate(t) === d || (t.date === d && tradePnl(t) === null));
+  const net = items.reduce((s, t) => s + (tradePnl(t) || 0), 0), j = D.journal[d];
+  openSheet(`${head(esc(fmtLong(d)))}
+    <div class="big ${net < 0 ? 'neg' : net > 0 ? 'pos' : ''}" style="font-size:28px;margin:-6px 2px 10px">${items.length ? signMoney(net) : 'No trades'}</div>
+    ${items.map(tradeRow).join('')}
+    <div class="card" style="margin-top:10px"><div class="card-h"><h3>Journal</h3>${j && !j.locked && j.mood ? `<span style="font-size:20px">${MOODS[j.mood - 1]}</span>` : ''}</div>
+      ${journalLocked() ? '<p class="empty">Journal is locked.</p>' : j && j.text ? `<p class="jsnip">${esc(j.text.slice(0, 220))}${j.text.length > 220 ? '…' : ''}</p>` : '<p class="empty">No entry for this day.</p>'}
+      <button class="link" style="margin-top:8px" data-act="jopen" data-d="${d}">Open journal →</button></div>
+    <div class="actions"><button class="btn primary" data-act="addTradeOn" data-d="${d}">+ Add trade</button></div>`, null);
+}
+function tradeForm(t, onDate){
+  const isNew = !t, v = t || {mode:'trade', date:onDate || today(), symbol:'', kind:'intraday', side:'long', qty:'', entry:'', exit:'', exitDate:'', charges:'', pnl:'', note:''};
+  const syms = [...new Set(D.trades.map(x => x.symbol).filter(Boolean))].slice(-40);
+  const pv = v.mode === 'pnl' ? +v.pnl || 0 : 0;
+  openSheet(`<form id="sf">${head(isNew ? 'Log trade' : 'Edit trade')}
+    <div class="seg"><label><input type="radio" name="mode" value="trade" ${v.mode !== 'pnl' ? 'checked' : ''}><span>Trade</span></label><label><input type="radio" name="mode" value="pnl" ${v.mode === 'pnl' ? 'checked' : ''}><span>Day P&L only</span></label></div>
+    <div id="tmTrade">
+      <label class="f"><span>Symbol</span><input name="symbol" value="${esc(v.symbol)}" placeholder="e.g. NIFTY, RELIANCE" autocomplete="off" autocapitalize="characters" list="symList" ${isNew ? 'autofocus' : ''}></label>
+      <datalist id="symList">${syms.map(x => `<option value="${esc(x)}">`).join('')}</datalist>
+      <div class="seg"><label><input type="radio" name="kind" value="intraday" ${v.kind !== 'swing' ? 'checked' : ''}><span>Intraday</span></label><label><input type="radio" name="kind" value="swing" ${v.kind === 'swing' ? 'checked' : ''}><span>Swing</span></label></div>
+      <div class="seg"><label><input type="radio" name="side" value="long" ${v.side !== 'short' ? 'checked' : ''}><span>Buy (long)</span></label><label><input type="radio" name="side" value="short" ${v.side === 'short' ? 'checked' : ''}><span>Sell (short)</span></label></div>
+      <div class="grid2">
+        <label class="f"><span>Quantity</span><input name="qty" type="number" inputmode="decimal" step="any" min="0" value="${v.qty}"></label>
+        <label class="f"><span>Entry price</span><input name="entry" type="number" inputmode="decimal" step="any" min="0" value="${v.entry}"></label>
+        <label class="f"><span>Exit price</span><input name="exit" type="number" inputmode="decimal" step="any" min="0" value="${v.exit ?? ''}" placeholder="Empty = open"></label>
+        <label class="f"><span>Charges</span><input name="charges" type="number" inputmode="decimal" step="any" min="0" value="${v.charges}" placeholder="Brokerage, taxes"></label>
+      </div>
+    </div>
+    <div id="tmPnl">
+      <div class="seg"><label><input type="radio" name="pl" value="1" ${pv >= 0 ? 'checked' : ''}><span>Profit</span></label><label><input type="radio" name="pl" value="-1" ${pv < 0 ? 'checked' : ''}><span>Loss</span></label></div>
+      <input class="amt" name="pnlAmt" type="number" inputmode="decimal" step="0.01" min="0" placeholder="₹0" value="${pv ? Math.abs(pv) : ''}">
+    </div>
+    <div class="grid2"><label class="f"><span id="dLbl">Date</span><input type="date" name="date" value="${v.date}" required></label><label class="f" id="exDateWrap"><span>Exit date</span><input type="date" name="exitDate" value="${v.exitDate || ''}"></label></div>
+    <label class="f"><span>Note</span><input name="note" value="${esc(v.note)}" placeholder="Setup, reason, mistake…" autocomplete="off"></label>
+    <p class="tprev" id="tPrev"></p>
+    ${actions(isNew)}</form>`,
+  (fd, sub) => {
+    if (sub && sub.value === 'del') { const gone = live(D.trades, t.id); D.trades = D.trades.filter(x => x.id !== t.id); toast('Trade deleted', () => gone && D.trades.push(gone)); return; }
+    let rec;
+    if (fd.mode === 'pnl') {
+      const a = parseFloat(fd.pnlAmt); if (!(a >= 0) || fd.pnlAmt === '') { toast('Enter the P&L amount'); return false; }
+      rec = {mode:'pnl', pnl:Math.round(a * (+fd.pl || 1) * 100) / 100, date:fd.date || today(), note:(fd.note || '').trim(), symbol:'', kind:'intraday', side:'long', qty:'', entry:'', exit:'', exitDate:'', charges:''};
+    } else {
+      const sym = (fd.symbol || '').trim().toUpperCase(); if (!sym) { toast('Enter the symbol'); return false; }
+      if (!(parseFloat(fd.qty) > 0) || !(parseFloat(fd.entry) > 0)) { toast('Enter quantity and entry price'); return false; }
+      const hasExit = fd.exit !== '' && !isNaN(parseFloat(fd.exit));
+      if (fd.kind === 'intraday' && !hasExit) { toast('Intraday trades need an exit price'); return false; }
+      rec = {mode:'trade', symbol:sym, kind:fd.kind, side:fd.side, qty:+fd.qty, entry:+fd.entry, exit:hasExit ? +fd.exit : '', charges:+fd.charges || 0,
+        date:fd.date || today(), exitDate: fd.kind === 'swing' && hasExit ? (fd.exitDate || fd.date || today()) : '', note:(fd.note || '').trim(), pnl:''};
+      if (rec.exitDate && rec.exitDate < rec.date) { toast("Exit date can't be before entry"); return false; }
+    }
+    if (isNew) D.trades.push({id:uid_(), created:Date.now(), ...rec});
+    else { const cur = live(D.trades, t.id); if (!cur) { toast('That trade was deleted elsewhere'); return; } Object.assign(cur, rec); }
+    const p = tradePnl(rec); toast(p === null ? 'Open position saved' : `Saved · ${signMoney(p)}`);
+  });
+  const f = $('#sf');
+  const sync = () => {
+    const mode = f.elements.mode.value, swing = f.elements.kind.value === 'swing';
+    $('#tmTrade').hidden = mode === 'pnl'; $('#tmPnl').hidden = mode !== 'pnl';
+    $('#exDateWrap').hidden = mode === 'pnl' || !swing; $('#dLbl').textContent = mode === 'pnl' || !swing ? 'Date' : 'Entry date';
+    let p;
+    if (mode === 'pnl') { const a = parseFloat(f.elements.pnlAmt.value); p = isNaN(a) ? null : a * (+f.elements.pl.value || 1); }
+    else p = tradePnl({mode:'trade', side:f.elements.side.value, qty:f.elements.qty.value, entry:f.elements.entry.value, exit:f.elements.exit.value, charges:f.elements.charges.value});
+    $('#tPrev').innerHTML = p === null || isNaN(p) ? (mode === 'pnl' ? '' : swing ? 'No exit price: saved as an <b>open position</b>.' : '') : `P&L <b class="${p < 0 ? 'neg' : 'pos'}">${signMoney(p)}</b>`;
+  };
+  f.addEventListener('input', sync); f.addEventListener('change', sync); sync();
+}
+function tradeSettingsForm(){
+  const tr = D.trading || {account:null, post:false};
+  openSheet(`<form id="sf">${head('Trading settings')}
+    <label class="check"><input type="checkbox" name="post" ${tr.post ? 'checked' : ''}><span>Add each day's net P&L to Money</span></label>
+    <label class="f"><span>Into account</span><select name="account">${D.accounts.map(a => `<option value="${a.id}" ${a.id === tr.account ? 'selected' : ''}>${esc(a.name)}</option>`).join('')}</select></label>
+    <p class="hint">Profit days become income ("Trading"), loss days an expense ("Trading loss"), one entry per day, kept in step with your trades. Tip: add your broker as an account, e.g. "Zerodha".</p>
+    <div class="actions"><button class="btn primary" value="save">Save</button></div></form>`,
+  fd => {
+    const post = !!fd.post;
+    if (tr.post && !post && D.transactions.some(x => x.auto === 'trading') && !confirm('Remove the trading entries already added to Money?')) return false;
+    D.trading = {account:fd.account || null, post};
+    toast(post ? "Daily P&L now goes into Money" : 'Trading is no longer added to Money');
+  });
+}
+// Keep one Money entry per trading day ("trd_<date>") equal to that day's net P&L, when turned on.
+function syncTradingToMoney(){
+  const tr = D.trading || {}, on = tr.post && D.accounts.some(a => a.id === tr.account);
+  const want = new Map();
+  if (on) {
+    for (const [d, v] of Object.entries(tradeStats().days)) {
+      const p = Math.round(v.pnl * 100) / 100; if (!p) continue;
+      want.set('trd_' + d, {type: p > 0 ? 'income' : 'expense', amount: Math.abs(p), account: tr.account, to:'', category: p > 0 ? 'Trading' : 'Trading loss', note:'Trading P&L', date:d, auto:'trading'});
+    }
+    if (!D.categories.income.includes('Trading')) D.categories.income.push('Trading');
+    if (!D.categories.expense.includes('Trading loss')) D.categories.expense.push('Trading loss');
+  }
+  D.transactions = D.transactions.filter(x => x.auto !== 'trading' || want.has(x.id));
+  for (const [id, rec] of want) {
+    const cur = D.transactions.find(x => x.id === id);
+    if (!cur) D.transactions.push({id, created:Date.now(), ...rec});
+    else if (stable({...cur, created:0}) !== stable({...rec, id, created:0})) Object.assign(cur, rec);
+  }
+}
+
+/* ---------- SEARCH ---------- */
+function searchSheet(){
+  openSheet(`${head('Search')}<input id="q" class="search" type="search" placeholder="Transactions, journal, tasks, trades" autocomplete="off" autofocus><div id="qres"><p class="hint" style="margin:10px 2px">Try a shop, a person, a symbol or an amount.</p></div>`, null);
+  $('#q').addEventListener('input', () => { clearTimeout(searchSheet.t); searchSheet.t = setTimeout(runSearch, 150); });
+}
+function hl(text, q){
+  const s = String(text || ''), i = s.toLowerCase().indexOf(q);
+  if (i < 0) return esc(s.slice(0, 90));
+  const from = Math.max(0, i - 30), part = s.slice(from, i + q.length + 60);
+  return (from ? '…' : '') + esc(part).replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'), 'ig'), m => `<mark>${m}</mark>`);
+}
+function runSearch(){
+  const q = ($('#q')?.value || '').trim().toLowerCase(), out = $('#qres'); if (!out) return;
+  if (q.length < 2) { out.innerHTML = '<p class="hint" style="margin:10px 2px">Type at least 2 letters.</p>'; return; }
+  const an = id => D.accounts.find(a => a.id === id)?.name || '';
+  const num = parseFloat(q.replace(/[₹,]/g, ''));
+  const has = (...xs) => xs.some(x => String(x || '').toLowerCase().includes(q));
+  const tx = D.transactions.filter(t => has(t.note, t.category, an(t.account), an(t.to)) || (!isNaN(num) && Math.abs(+t.amount - num) < 0.005)).sort((a, b) => b.date.localeCompare(a.date));
+  const jr = Object.entries(D.journal).filter(([, e]) => !e.locked && has(e.text, e.plan)).sort((a, b) => b[0].localeCompare(a[0]));
+  const tk = D.tasks.filter(t => has(t.title, t.note)).sort((a, b) => (a.done - b.done) || (b.due || '').localeCompare(a.due || ''));
+  const td = D.trades.filter(t => has(t.symbol, t.note)).sort((a, b) => pnlDate(b).localeCompare(pnlDate(a)));
+  const grp = (title, n, rows) => n ? `<h3 class="qh">${title} <small>${n}</small></h3>${rows}${n > 25 ? `<p class="hint">Showing 25 of ${n}</p>` : ''}` : '';
+  let h = grp('Transactions', tx.length, tx.slice(0, 25).map(t => `<button class="qr" data-act="qTxn" data-id="${t.id}"><span><b>${hl(t.note || t.category || 'Transfer', q)}</b><small>${esc(relLabel(t.date))} · ${esc(t.type === 'transfer' ? 'Transfer' : t.category)} · ${esc(an(t.account))}</small></span><span class="${t.type === 'income' ? 'pos' : ''}">${t.type === 'income' ? '+' : t.type === 'expense' ? '−' : ''}${money(t.amount)}</span></button>`).join(''))
+    + grp('Journal', jr.length, jr.slice(0, 25).map(([d, e]) => `<button class="qr" data-act="jopen" data-d="${d}"><span><b>${e.mood ? MOODS[e.mood - 1] + ' ' : ''}${esc(fmtLong(d))}</b><small>${hl(has(e.text) ? e.text : e.plan, q)}</small></span></button>`).join(''))
+    + grp('Tasks', tk.length, tk.slice(0, 25).map(t => `<button class="qr" data-act="qTask" data-id="${t.id}"><span><b>${t.done ? '✓ ' : ''}${hl(t.title, q)}</b><small>${t.due ? esc(relLabel(t.due)) : 'No date'}${t.note && has(t.note) ? ' · ' + hl(t.note, q) : ''}</small></span></button>`).join(''))
+    + grp('Trades', td.length, td.slice(0, 25).map(t => { const p = tradePnl(t); return `<button class="qr" data-act="qTrade" data-id="${t.id}"><span><b>${hl(tradeTitle(t), q)}</b><small>${esc(relLabel(pnlDate(t)))}${t.note ? ' · ' + hl(t.note, q) : ''}</small></span><span class="${p > 0 ? 'pos' : p < 0 ? 'neg' : ''}">${p === null ? 'Open' : signMoney(p)}</span></button>`; }).join(''));
+  if (journalLocked()) h += '<p class="hint" style="margin-top:12px">🔒 Journal entries are locked and not searched.</p>';
+  out.innerHTML = h || `<p class="empty" style="margin:14px 2px">Nothing found for “${esc(q)}”.</p>`;
+}
+
+/* ---------- JOURNAL INSIGHTS ---------- */
+function journalStreak(){
+  const has = d => { const e = D.journal[d]; return e && (e.locked || (e.text || '').trim() || e.mood); };
+  let d = today(); if (!has(d)) d = addDays(d, -1);
+  let n = 0; while (has(d) && n < 3650) { n++; d = addDays(d, -1); }
+  let best = 0, run = 0, prev = null;
+  Object.keys(D.journal).filter(has).sort().forEach(k => { run = prev && addDays(prev, 1) === k ? run + 1 : 1; best = Math.max(best, run); prev = k; });
+  return {n, best, wroteToday: !!has(today())};
+}
+function insightsHtml(){
+  const st = journalStreak(), t = today(), days = Array.from({length:30}, (_, i) => addDays(t, i - 29));
+  const moods = days.map(d => { const e = D.journal[d]; return e && !e.locked && e.mood ? e.mood : 0; });
+  const logged = moods.filter(Boolean), avg = logged.length ? logged.reduce((a, b) => a + b, 0) / logged.length : 0;
+  const W = 300, H = 64, bw = W / 30;
+  const bars = moods.map((m, i) => m ? `<rect x="${i * bw + 1}" y="${H - m / 5 * (H - 4)}" width="${bw - 2}" height="${m / 5 * (H - 4)}" rx="2" class="mb m${m}"><title>${fmtLong(days[i])}: ${MOODS[m - 1]}</title></rect>` : `<rect x="${i * bw + bw / 2 - 1}" y="${H - 2}" width="2" height="2" class="mb0"/>`).join('');
+  const back = [[1, 'year'], [0, 'month']].map(([y, l]) => { const d0 = parseD(t); y ? d0.setFullYear(d0.getFullYear() - 1) : d0.setMonth(d0.getMonth() - 1); const k = ds(d0), e = D.journal[k]; return e && !e.locked && (e.text || '').trim() ? {k, l, e} : null; }).filter(Boolean);
+  return `<div class="card ins"><div class="card-h"><h3>Insights</h3></div>
+    <div class="sum" style="margin-bottom:12px"><div><span class="label">Streak</span><b>🔥 ${st.n} day${st.n === 1 ? '' : 's'}</b></div><div><span class="label">Best streak</span><b>${st.best}</b></div><div><span class="label">Avg mood (30d)</span><b>${avg ? MOODS[Math.round(avg) - 1] + ' ' + avg.toFixed(1) : '—'}</b></div></div>
+    <span class="label" style="margin-bottom:6px">Mood, last 30 days</span>
+    <svg class="moodc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Mood over the last 30 days">${bars}</svg>
+    <div class="moodx"><span>${esc(relLabel(days[0]))}</span><span>Today</span></div>
+    ${!st.wroteToday && st.n ? `<p class="hint">Write today to keep your ${st.n}-day streak going.</p>` : ''}
+    ${back.map(b => `<button class="jentry" style="margin-top:10px" data-act="jopen" data-d="${b.k}"><b>On this day, 1 ${b.l} ago ${b.e.mood ? MOODS[b.e.mood - 1] : ''}</b><p>${esc(b.e.text.slice(0, 160))}</p></button>`).join('')}
+  </div>`;
+}
+function journalLockHtml(){
+  return `<div class="card jlock"><div style="font-size:34px;text-align:center">🔒</div><h2 style="text-align:center;margin:4px 0 6px">Journal is encrypted</h2>
+    <p class="hint" style="text-align:center;margin-bottom:14px">Enter your journal passphrase to read and write entries on this phone.</p>
+    <form id="jUnlock"><label class="f"><span>Passphrase</span><div class="pw"><input name="pass" type="password" autocomplete="current-password" required><button type="button" data-act="pwshow">Show</button></div></label>
+    <label class="check"><input type="checkbox" name="remember" checked><span>Remember on this phone</span></label>
+    <div class="gerr" id="jErr"></div><button class="btn primary" style="width:100%">Unlock journal</button></form>
+    <button class="link" style="display:block;margin:14px auto 0" data-act="jForgot">Forgot passphrase?</button></div>`;
+}
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'jUnlock') return;
+  e.preventDefault();
+  const f = e.target, btn = f.querySelector('.btn'); btn.disabled = true; btn.textContent = 'Unlocking…';
+  const ok = await unlockJournal(f.elements.pass.value, f.elements.remember.checked);
+  if (!ok) { btn.disabled = false; btn.textContent = 'Unlock journal'; $('#jErr').textContent = 'Wrong passphrase.'; } else toast('Journal unlocked');
+});
+function cryptoSettingsHtml(){
+  if (!D.journalCrypto) return `<div class="setrow"><span>Journal encryption</span><button type="button" class="btn ghost small" data-act="jCryptoOn">Set up</button></div>
+    <p class="hint" style="margin:-8px 2px 14px">Encrypt journal entries with a passphrase so only you can read them, not even the database.</p>`;
+  return `<div class="acctbox"><span class="label">Journal encryption is on</span><p class="hint" style="margin:4px 0 10px">${jKey ? 'Unlocked on this phone.' : 'Locked on this phone.'}</p>
+    <div class="acctbtns">${jKey ? '<button type="button" class="btn ghost small" data-act="jLockNow">Lock now</button><button type="button" class="btn danger small" data-act="jCryptoOff">Turn off</button>' : '<button type="button" class="btn ghost small" data-act="tabJournal">Unlock in Journal</button>'}</div></div>`;
+}
+function cryptoForm(){
+  openSheet(`<form id="sf">${head('Encrypt your journal')}
+    <p class="hint" style="margin:-6px 2px 14px">Entries are locked on your phone before they're saved, with a key made from this passphrase. <b>If you forget it, your journal cannot be recovered</b>, not by you, not by anyone.</p>
+    <label class="f"><span>Passphrase (at least 8 characters)</span><div class="pw"><input name="p1" type="password" autocomplete="new-password" autofocus><button type="button" data-act="pwshow">Show</button></div></label>
+    <label class="f"><span>Repeat passphrase</span><div class="pw"><input name="p2" type="password" autocomplete="new-password"><button type="button" data-act="pwshow">Show</button></div></label>
+    <label class="check"><input type="checkbox" name="remember" checked><span>Remember on this phone</span></label>
+    <label class="check"><input type="checkbox" name="ack"><span>I understand a forgotten passphrase means lost entries</span></label>
+    <div class="actions"><button class="btn primary" value="save">Encrypt journal</button></div></form>`,
+  fd => {
+    if ((fd.p1 || '').length < 8) { toast('Use at least 8 characters'); return false; }
+    if (fd.p1 !== fd.p2) { toast("Passphrases don't match"); return false; }
+    if (!fd.ack) { toast('Tick the box to confirm'); return false; }
+    enableCrypto(fd.p1, !!fd.remember).then(() => { closeSheet(); render(); toast('Journal is now encrypted'); });
+    return false;
+  });
+}
+
+/* ---------- BANK STATEMENT IMPORT ---------- */
+let imp = null;
+function parseCSV(text){
+  text = text.replace(/^\uFEFF/, '');
+  const first = text.split(/\r?\n/).slice(0, 15).join('\n');
+  const delim = [',', ';', '\t', '|'].map(d => [d, (first.match(new RegExp(d === '|' ? '\\|' : d, 'g')) || []).length]).sort((a, b) => b[1] - a[1])[0][0];
+  const rows = []; let row = [], cell = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (q) { if (c === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; } else cell += c; }
+    else if (c === '"') q = true;
+    else if (c === delim) { row.push(cell); cell = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && text[i + 1] === '\n') i++; row.push(cell); rows.push(row); row = []; cell = ''; }
+    else cell += c;
+  }
+  if (cell || row.length) { row.push(cell); rows.push(row); }
+  return rows.map(r => r.map(x => x.trim())).filter(r => r.some(x => x));
+}
+const MONTHS = {jan:1, feb:2, mar:3, apr:4, may:5, jun:6, jul:7, aug:8, sep:9, sept:9, oct:10, nov:11, dec:12};
+function parseDateIN(s){
+  s = String(s || '').trim().replace(/\s+\d{1,2}:\d{2}(:\d{2})?(\s*[ap]m)?$/i, '');
+  let m;
+  if ((m = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/.exec(s))) return mk(+m[1], +m[2], +m[3]);
+  if ((m = /^(\d{1,2})[-/. ](\d{1,2})[-/. ](\d{2,4})$/.exec(s))) return mk(yr(m[3]), +m[2], +m[1]);           // Indian banks: day first
+  if ((m = /^(\d{1,2})[-/ ]([A-Za-z]{3,4})[a-z]*[-/ ,]*(\d{2,4})$/.exec(s))) return mk(yr(m[3]), MONTHS[m[2].toLowerCase()], +m[1]);
+  return null;
+  function yr(y){ y = +y; return y < 100 ? 2000 + y : y; }
+  function mk(y, mo, d){ if (!mo || mo > 12 || d < 1 || d > 31) return null; const dt = new Date(y, mo - 1, d); return dt.getMonth() === mo - 1 ? ds(dt) : null; }
+}
+const numIN = s => { const t = String(s || '').replace(/[₹,\s]|INR|Rs\.?/gi, ''); if (!t || t === '-') return 0; const neg = /^\(.*\)$/.test(t) || /^-/.test(t); const v = parseFloat(t.replace(/[()\-]/g, '')); return isNaN(v) ? 0 : (neg ? -v : v); };
+function detectColumns(rows){
+  let hi = -1, best = 0;
+  rows.slice(0, 40).forEach((r, i) => { const t = r.join(' ').toLowerCase(); const sc = /date/.test(t) + /narration|description|particular|remark|details|transaction/.test(t) + /withdrawal|debit|dr\b|amount/.test(t) + /deposit|credit|cr\b/.test(t) + /balance/.test(t); if (sc > best) { best = sc; hi = i; } });
+  if (best < 2) hi = -1;
+  const hdr = hi >= 0 ? rows[hi].map(x => x.toLowerCase()) : [];
+  const find = re => hdr.findIndex(x => re.test(x));
+  const map = {date: find(/^(txn |transaction |value )?date|date$/), desc: find(/narration|description|particular|remark|details/), debit: find(/withdrawal|debit|^dr$|paid out/), credit: find(/deposit|credit|^cr$|paid in/), amount: -1, drcr: find(/dr\s*\/\s*cr|cr\s*\/\s*dr|^type$/)};
+  if (map.debit < 0 && map.credit < 0) map.amount = find(/amount/);
+  if (map.date < 0) map.date = find(/date/);
+  return {hi, map};
+}
+const RULES = [[/swiggy|zomato|restaurant|cafe|hotel|dominos|pizza|kfc|mcdonald|starbucks|food/i, 'Food'], [/bigbasket|blinkit|zepto|grofers|dmart|grocery|kirana|instamart|jiomart/i, 'Groceries'],
+  [/uber|ola|rapido|petrol|fuel|hpcl|bpcl|iocl|indian oil|metro|irctc|fastag|parking|redbus/i, 'Transport'], [/amazon|flipkart|myntra|ajio|meesho|nykaa|croma|reliance digital/i, 'Shopping'],
+  [/electric|bescom|msedcl|tata power|airtel|jio|vodafone|vi |bsnl|recharge|broadband|gas|water|bill|dth|tata play/i, 'Bills'], [/rent/i, 'Rent'],
+  [/hospital|pharma|apollo|medplus|1mg|clinic|doctor|netmeds/i, 'Health'], [/netflix|hotstar|spotify|prime video|bookmyshow|pvr|inox|youtube/i, 'Fun'],
+  [/salary|sal cr|payroll/i, 'Salary', 'income'], [/interest|int\.?pd|int cr/i, 'Interest', 'income'], [/zerodha|groww|upstox|angel|dhan|fyers|5paisa/i, 'Trading', 'income']];
+function guessCategory(desc, type){
+  const d = desc.toLowerCase(), cats = D.categories[type === 'income' ? 'income' : 'expense'];
+  for (const [k, c] of Object.entries(D.importRules || {})) if (d.includes(k) && cats.includes(c)) return c;
+  for (const [re, c, ty] of RULES) if (re.test(desc) && (ty || 'expense') === type && cats.includes(c)) return c;
+  return cats.includes('Other') ? 'Other' : cats[cats.length - 1];
+}
+const ruleKey = desc => (desc.toLowerCase().replace(/upi[\/-]|neft[\/-]|imps[\/-]|pos |ach |nach |[0-9]{4,}|[^a-z ]/g, ' ').split(/\s+/).filter(w => w.length > 3)[0]) || '';
+function hashStr(s){ let h = 5381; for (let i = 0; i < s.length; i++) h = (h * 33 ^ s.charCodeAt(i)) >>> 0; return h.toString(36); }
+function importStart(){
+  imp = null;
+  openSheet(`${head('Import bank statement')}
+    <p class="hint" style="margin:-6px 2px 12px">Download your statement from net banking as <b>CSV</b> (sometimes called "Delimited" or "Excel/CSV"). If you only have Excel, open it in Google Sheets and use File → Download → CSV.</p>
+    <label class="f"><span>Into account</span><select id="impAcct">${D.accounts.map(a => `<option value="${a.id}" ${a.type === 'bank' ? 'selected' : ''}>${esc(a.name)}</option>`).join('')}</select></label>
+    <button class="btn primary" style="width:100%" data-act="impPick">Choose CSV file</button>
+    <input type="file" id="impFile" accept=".csv,.txt,.tsv,text/csv,text/plain" hidden>`, null);
+  $('#impFile').addEventListener('change', async e => {
+    const file = e.target.files[0]; if (!file) return;
+    try { importParse(await file.text(), $('#impAcct').value); } catch (_) { toast("Couldn't read that file"); }
+  });
+}
+function importParse(text, account){
+  const rows = parseCSV(text);
+  if (rows.length < 2) { toast("That file doesn't look like a statement"); return; }
+  const {hi, map} = detectColumns(rows);
+  imp = {rows, hi, map, account, items: []};
+  buildImportItems(); drawImport();
+}
+function buildImportItems(){
+  const {rows, hi, map, account} = imp, out = [];
+  const existing = new Set(D.transactions.filter(t => t.account === account).map(t => `${t.date}|${t.type}|${(+t.amount).toFixed(2)}`));
+  for (let i = hi + 1; i < rows.length; i++) {
+    const r = rows[i], date = parseDateIN(r[map.date]); if (!date) continue;
+    let amt = 0;
+    if (map.amount >= 0) { amt = numIN(r[map.amount]); if (map.drcr >= 0 && /^d/i.test(r[map.drcr] || '')) amt = -Math.abs(amt); else if (map.drcr >= 0 && /^c/i.test(r[map.drcr] || '')) amt = Math.abs(amt); }
+    else amt = Math.abs(numIN(r[map.credit])) - Math.abs(numIN(r[map.debit]));
+    if (!amt) continue;
+    const desc = (map.desc >= 0 ? r[map.desc] : '').replace(/\s+/g, ' ').trim(), type = amt > 0 ? 'income' : 'expense', amount = Math.round(Math.abs(amt) * 100) / 100;
+    const id = 'imp_' + hashStr(`${account}|${date}|${amount}|${desc}|${i}`);
+    const already = D.transactions.some(t => t.id === id), dup = already || existing.has(`${date}|${type}|${amount.toFixed(2)}`);
+    out.push({id, date, desc, type, amount, category: guessCategory(desc, type), on: !dup, dup, already});
+  }
+  imp.items = out;
+}
+function drawImport(){
+  const it = imp.items, on = it.filter(x => x.on), hdr = imp.hi >= 0 ? imp.rows[imp.hi] : imp.rows[0].map((_, i) => 'Column ' + (i + 1));
+  const sel = (k, label, opt) => `<label class="f"><span>${label}</span><select data-imap="${k}">${opt ? '<option value="-1">—</option>' : ''}${hdr.map((h, i) => `<option value="${i}" ${imp.map[k] === i ? 'selected' : ''}>${esc(h || 'Column ' + (i + 1))}</option>`).join('')}</select></label>`;
+  const inc = on.filter(x => x.type === 'income').reduce((s, x) => s + x.amount, 0), out = on.filter(x => x.type === 'expense').reduce((s, x) => s + x.amount, 0);
+  const sc = $('#sheet').scrollTop;
+  openSheet(`${head('Check and import')}
+    <details class="imap" ${it.length ? '' : 'open'}><summary>Columns ${it.length ? '(found automatically)' : '(please choose)'}</summary>
+      <div class="grid2">${sel('date', 'Date')}${sel('desc', 'Description', 1)}${sel('debit', 'Withdrawal / debit', 1)}${sel('credit', 'Deposit / credit', 1)}${sel('amount', 'Single amount column', 1)}${sel('drcr', 'Dr / Cr column', 1)}</div></details>
+    ${it.length ? `<p class="hint" style="margin:8px 2px 10px"><b>${on.length}</b> of ${it.length} selected · in ${money(inc)} · out ${money(out)}${it.some(x => x.dup) ? ' · possible duplicates are unticked' : ''}</p>
+      <div class="implist">${it.map((x, i) => `<div class="impr ${x.on ? '' : 'off'}"><input type="checkbox" data-imp="${i}" ${x.on ? 'checked' : ''} aria-label="Include">
+        <div class="m"><b>${esc(x.desc || '(no description)')}</b><small>${esc(relLabel(x.date))}${x.dup ? ` · <span class="neg">${x.already ? 'already imported' : 'possible duplicate'}</span>` : ''}</small>
+        <select data-impcat="${i}">${D.categories[x.type === 'income' ? 'income' : 'expense'].map(c => `<option ${c === x.category ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select></div>
+        <span class="a ${x.type === 'income' ? 'pos' : ''}">${x.type === 'income' ? '+' : '−'}${money(x.amount)}</span></div>`).join('')}</div>
+      <div class="actions" style="position:sticky;bottom:0;background:var(--bg);padding-top:8px"><button class="btn primary" data-act="impGo" ${on.length ? '' : 'disabled'}>Import ${on.length}</button></div>`
+    : `<p class="empty" style="margin:12px 2px">No transactions found with these columns. Pick the date and amount columns above.</p>`}`, null);
+  $('#sheet').scrollTop = sc;
+}
+document.addEventListener('change', e => {
+  if (!imp) return;
+  const el = e.target;
+  if (el.dataset.imap) { imp.map[el.dataset.imap] = +el.value; if (el.dataset.imap === 'debit' || el.dataset.imap === 'credit') { if (+el.value >= 0) imp.map.amount = -1; } if (el.dataset.imap === 'amount' && +el.value >= 0) { imp.map.debit = -1; imp.map.credit = -1; } buildImportItems(); drawImport(); }
+  else if (el.dataset.imp !== undefined) { imp.items[+el.dataset.imp].on = el.checked; drawImport(); }
+  else if (el.dataset.impcat !== undefined) { const x = imp.items[+el.dataset.impcat]; x.category = el.value; x.taught = true; }
+});
+function importGo(){
+  const on = imp.items.filter(x => x.on);
+  for (const x of on) {
+    if (D.transactions.some(t => t.id === x.id)) continue;
+    D.transactions.push({id:x.id, created:Date.now(), type:x.type, amount:x.amount, account:imp.account, to:'', category:x.category, note:x.desc.slice(0, 80), date:x.date, imported:true});
+    if (x.taught) { const k = ruleKey(x.desc); if (k) D.importRules[k] = x.category; }       // learn: next time this payee gets the same category
+  }
+  const n = on.length; imp = null; save(); closeSheet(); S.tab = 'money'; S.moneyView = 'txns'; render();
+  toast(`Imported ${n} transaction${n === 1 ? '' : 's'}`);
+}
+
+/* ---------- JOURNAL ---------- */
+function jEntry(d, create){ let e = D.journal[d]; if (!e && create) e = D.journal[d] = {text:'', plan:'', mood:0, planSent:[], updated:Date.now()}; return e; }
+function cleanEntry(d){ const e = D.journal[d]; if (e && !e.text.trim() && !e.plan.trim() && !e.mood) delete D.journal[d]; }
+function unsentPlan(d){
+  const e = D.journal[d]; if (!e) return [];
+  const sent = new Set(e.planSent || []);
+  return (e.plan || '').split('\n').map(s => s.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, '').trim()).filter(s => s && !sent.has(s));
+}
+function vJournal(){
+  if (journalLocked()) return journalLockHtml();
+  const d = S.jDate, t = today(), e = D.journal[d] || {text:'', plan:'', mood:0};
+  const recent = Object.keys(D.journal).filter(k => k !== d && !D.journal[k].locked).sort().reverse().slice(0, 20);
+  return `
+  <div class="datebar"><button data-act="jday" data-n="-1" aria-label="Previous day">‹</button><div><b>${relLabel(d)}</b><small>${fmtLong(d)}</small></div><button data-act="jday" data-n="1" ${d>=t?'disabled':''} aria-label="Next day">›</button></div>
+  <div class="moods">${MOODS.map((m,i) => `<button class="mood ${e.mood===i+1?'on':''}" data-act="mood" data-v="${i+1}">${m}</button>`).join('')}</div>
+  <textarea id="jText" class="jt" placeholder="What happened today? What's on your mind?">${esc(e.text)}</textarea>
+  <div class="jlabel"><h3>Plan for ${d===t ? 'tomorrow' : relLabel(addDays(d,1))}</h3><span class="saved" id="jSaved"></span></div>
+  <textarea id="jPlan" class="jt jp" placeholder="One item per line">${esc(e.plan)}</textarea>
+  <button class="btn ghost" id="planBtn" style="width:100%;margin-top:10px" data-act="planToTasks"></button>
+  <div style="margin-top:22px">${insightsHtml()}</div>
+  ${D.journalCrypto ? '<p class="hint" style="text-align:center;margin:-2px 0 8px">🔒 Encrypted on this phone · <button class="link" data-act="jLockNow">Lock now</button></p>' : ''}
+  ${recent.length ? `<h3 style="margin:26px 2px 10px">Earlier entries</h3>` + recent.map(k => { const r = D.journal[k]; return `<button class="jentry" data-act="jopen" data-d="${k}"><b>${r.mood ? MOODS[r.mood-1] + ' ' : ''}${relLabel(k)}</b><p>${esc((r.text || r.plan || '').slice(0,160)) || '—'}</p></button>`; }).join('') : ''}`;
+}
+let jTimer = null;
+function flushJournal(){
+  if (S.tab !== 'journal') return;
+  const tx = $('#jText'), pl = $('#jPlan'); if (!tx) return;
+  clearTimeout(jTimer);
+  const text = tx.value, plan = pl.value;
+  if (!D.journal[S.jDate] && !text.trim() && !plan.trim()) return;
+  const e = jEntry(S.jDate, true);
+  if (e.text === text && e.plan === plan) return;
+  e.text = text; e.plan = plan; e.updated = Date.now();
+  cleanEntry(S.jDate); save();
+  const s = $('#jSaved'); if (s) s.textContent = 'Saved';
+}
+function updatePlanBtn(){
+  const b = $('#planBtn'); if (!b) return;
+  const n = unsentPlan(S.jDate).length;
+  b.disabled = !n;
+  b.textContent = n ? `Add ${n} to tasks for ${relLabel(addDays(S.jDate,1))}` : 'Plan lines become tasks';
+}
+function bindJournal(){
+  ['#jText','#jPlan'].forEach(sel => {
+    $(sel).addEventListener('input', () => {
+      $('#jSaved').textContent = 'Saving…';
+      clearTimeout(jTimer);
+      jTimer = setTimeout(() => { flushJournal(); updatePlanBtn(); }, 700);
+    });
+    $(sel).addEventListener('blur', () => { flushJournal(); updatePlanBtn(); });
+  });
+  updatePlanBtn();
+}
+function planToTasks(){
+  flushJournal();
+  const lines = unsentPlan(S.jDate); if (!lines.length) return toast('Nothing new to send');
+  const e = jEntry(S.jDate, true), due = addDays(S.jDate, 1);
+  lines.forEach(title => D.tasks.push({id:uid_(), title, project:D.projects[0].id, due, time:'', priority:2, note:'From journal', done:false, doneAt:null, created:Date.now()}));
+  e.planSent = [...(e.planSent || []), ...lines];
+  save(); updatePlanBtn();
+  toast(`${lines.length} task${lines.length>1?'s':''} added for ${relLabel(due)}`);
+}
+
+/* ---------- TASKS ---------- */
+const byDue = (a,b) => ((a.due||'9999') + (a.time||'99')).localeCompare((b.due||'9999') + (b.time||'99')) || (a.priority - b.priority);
+function dueBadge(x){
+  if (!x.due) return '';
+  const t = today(), tm = x.time ? ' · ' + fmtTime(x.time) : '';
+  if (x.done) return `<span>${relLabel(x.due)}</span>`;
+  if (x.due < t) return `<span class="due-over">Overdue · ${relLabel(x.due)}</span>`;
+  if (x.due === t) return `<span class="due-today">Today${tm}</span>`;
+  return `<span>${relLabel(x.due)}${tm}</span>`;
+}
+function taskRow(x){
+  const pn = (S.proj === 'all' && D.projects.length > 1) ? `<span>${esc(D.projects.find(p => p.id === x.project)?.name || '')}</span>` : '';
+  const rp = (x.repeat && !x.done ? `<span>↻ ${FREQ[x.repeat]}</span>` : '') + (remindAt(x) !== null && remindAt(x) > Date.now() ? `<span class="bell">🔔 ${(REMIND.find(r => r[0] === String(x.remind)) || ['', ''])[1].replace('At the time', 'On time')}</span>` : '');
+  return `<div class="task ${x.done?'done':''}"><button class="chk" data-act="toggleTask" data-id="${x.id}" aria-label="Mark done">${x.done?'✓':''}</button><div class="tmain" data-act="editTask" data-id="${x.id}"><div class="ttl">${esc(x.title)}</div><div class="meta">${dueBadge(x)}${rp}${pn}</div></div><span class="pri p${x.priority}"></span></div>`;
+}
+// Tick a task. A repeating task creates its next copy; un-ticking removes that copy again.
+function toggleTask(t){
+  t.done = !t.done; t.doneAt = t.done ? Date.now() : null;
+  if (t.done && t.repeat && !t.spawned) {
+    const base = t.due || today(), anchor = t.anchor || parseD(base).getDate();
+    let n = nextDate(base, t.repeat, anchor), g = 0;
+    while (n < today() && g++ < 1000) n = nextDate(n, t.repeat, anchor);
+    const nid = uid_();
+    D.tasks.push({...t, id:nid, done:false, doneAt:null, spawned:null, anchor, due:n, created:Date.now()});
+    t.spawned = nid;
+    return `Done ✓  Next: ${relLabel(n)}`;
+  }
+  if (!t.done && t.spawned) {
+    const s = live(D.tasks, t.spawned);
+    if (s && !s.done) D.tasks = D.tasks.filter(x => x.id !== t.spawned);
+    t.spawned = null;
+  }
+  return t.done ? 'Done ✓' : '';
+}
+function vTasks(){
+  const t = today(), inP = x => S.proj === 'all' || x.project === S.proj;
+  const open = D.tasks.filter(x => !x.done && inP(x));
+  const n = {today:open.filter(x => x.due && x.due <= t).length, upcoming:open.filter(x => x.due && x.due > t).length, all:open.length};
+  let list, grouped = false;
+  switch (S.taskFilter) {
+    case 'today': list = open.filter(x => x.due && x.due <= t).sort(byDue); break;
+    case 'upcoming': list = open.filter(x => x.due && x.due > t).sort(byDue); grouped = true; break;
+    case 'all': list = open.slice().sort(byDue); grouped = true; break;
+    default: list = D.tasks.filter(x => x.done && inP(x)).sort((a,b) => (b.doneAt||0) - (a.doneAt||0)).slice(0, 60);
+  }
+  const seg = [['today','Today'],['upcoming','Upcoming'],['all','All'],['done','Done']]
+    .map(([k,l]) => `<button class="${S.taskFilter===k?'on':''}" data-act="tfilter" data-v="${k}">${l}${n[k] ? ` <em>${n[k]}</em>` : ''}</button>`).join('');
+  const chips = `<button class="chip ${S.proj==='all'?'on':''}" data-act="proj" data-v="all">All</button>`
+    + D.projects.map(p => `<button class="chip ${S.proj===p.id?'on':''}" data-act="proj" data-v="${p.id}">${esc(p.name)}</button>`).join('')
+    + (S.proj !== 'all' ? `<button class="chip dash" data-act="editProject" data-id="${S.proj}">✎ Edit</button>` : '')
+    + `<button class="chip dash" data-act="newProject">+ Project</button>`;
+  let body;
+  if (!list.length) body = `<p class="empty card">${({today:'Clear for today.', upcoming:'Nothing scheduled ahead.', all:'No open tasks.', done:'Nothing finished yet.'})[S.taskFilter]}</p>`;
+  else if (grouped) {
+    let cur = null; body = '<div class="card">';
+    list.forEach(x => { const g = x.due ? (x.due < t ? 'Overdue' : relLabel(x.due)) : 'No date'; if (g !== cur) { body += `<div class="dgroup">${g}</div>`; cur = g; } body += taskRow(x); });
+    body += '</div>';
+  } else body = `<div class="card">${list.map(taskRow).join('')}</div>`;
+  return `<div class="seg">${seg}</div><div class="chips">${chips}</div>${body}`;
+}
+
+/* ---------- bottom sheet ---------- */
+let sheetSubmit = null;
+const head = title => `<div class="sh-h"><h2>${title}</h2><button type="button" class="x" data-act="closeSheet" aria-label="Close">✕</button></div>`;
+function openSheet(html, onSubmit){
+  const bg = $('#sheetBg');
+  $('#sheet').innerHTML = html; $('#sheet').scrollTop = 0;
+  sheetSubmit = onSubmit;
+  if (!bg.classList.contains('open')) { bg.classList.add('open'); history.pushState({sheet:1}, ''); }
+  document.body.classList.add('lock');
+  const af = $('#sheet [autofocus]'); if (af) setTimeout(() => af.focus(), 60);
+}
+function hideSheet(){ $('#sheetBg').classList.remove('open'); document.body.classList.remove('lock'); sheetSubmit = null; render(); }
+function closeSheet(){ if (history.state && history.state.sheet) history.back(); else hideSheet(); }
+addEventListener('popstate', () => { if ($('#sheetBg').classList.contains('open')) hideSheet(); });
+$('#sheetBg').addEventListener('click', e => { if (e.target.id === 'sheetBg') closeSheet(); });
+document.addEventListener('submit', e => {
+  if (e.target.id !== 'sf') return;
+  e.preventDefault();
+  const fd = Object.fromEntries(new FormData(e.target));
+  if (sheetSubmit && sheetSubmit(fd, e.submitter) !== false) { save(); closeSheet(); render(); }
+});
+const actions = isNew => `<div class="actions">${isNew ? '' : '<button class="btn danger" value="del">Delete</button>'}<button class="btn primary" value="save">Save</button></div>`;
+const live = (arr, id) => arr.find(x => x.id === id);   // always edit the current copy (data may have synced meanwhile)
+
+/* ---------- forms ---------- */
+// txnForm(entry) edits one entry; txnForm(null, type) adds one; txnForm(null, null, rule) edits a recurring series.
+function txnForm(t, type, rule){
+  const isNew = !t && !rule;
+  if (rule) t = {...rule.tpl, date:rule.next};
+  t = t || {type:type||'expense', amount:'', account:D.accounts[0].id, to:(D.accounts[1]||D.accounts[0]).id, category:'', date:today(), note:''};
+  const acc = sel => D.accounts.map(a => `<option value="${a.id}" ${a.id===sel?'selected':''}>${esc(a.name)}</option>`).join('');
+  const series = !isNew && !rule && t.rule ? D.recurring.find(r => r.id === t.rule) : null;
+  const quick = isNew && D.quick.length ? `<div class="qbar"><span class="label">Quick add · one tap saves for today</span><div class="chips">${D.quick.map(q => `<button type="button" class="chip" data-act="useQuick" data-id="${q.id}">${esc(quickLabel(q))}</button>`).join('')}</div></div>` : '';
+  const repeat = isNew || rule ? `<label class="f"><span>Repeat</span><select name="freq">${isNew ? '<option value="">Never</option>' : ''}${['daily','weekly','monthly','yearly'].map(f => `<option value="${f}" ${rule && rule.freq===f ? 'selected' : ''}>${FREQ[f]}</option>`).join('')}</select></label>` : '';
+  openSheet(`<form id="sf">${head(rule ? 'Recurring entry' : isNew ? 'New entry' : 'Edit entry')}
+    ${quick}
+    <div class="seg">${['expense','income','transfer'].map(k => `<label><input type="radio" name="type" value="${k}" ${t.type===k?'checked':''}><span>${cap(k)}</span></label>`).join('')}</div>
+    <input class="amt" name="amount" type="number" inputmode="decimal" step="0.01" min="0" placeholder="₹0" value="${t.amount}" ${isNew?'autofocus':''}>
+    <div class="grid2">
+      <label class="f"><span id="accLbl">Account</span><select name="account">${acc(t.account)}</select></label>
+      <label class="f" id="toWrap"><span>To</span><select name="to">${acc(t.to)}</select></label>
+      <label class="f" id="catWrap"><span>Category</span><select name="category" id="catSel"></select></label>
+    </div>
+    <div class="${repeat ? 'grid2' : ''}"><label class="f"><span>${rule ? 'Next date' : 'Date'}</span><input type="date" name="date" value="${t.date}" required></label>${repeat}</div>
+    <label class="f"><span>Note</span><input name="note" value="${esc(t.note)}" placeholder="${isNew ? 'e.g. Tea, Rent, Netflix' : 'Optional'}" autocomplete="off"></label>
+    ${isNew ? `<label class="check"><input type="checkbox" name="fav"><span>Also save as a quick entry</span></label>` : ''}
+    ${series ? `<p class="hint">↻ Part of a ${FREQ[series.freq].toLowerCase()} series. Changes here affect only this entry. Edit the series in Money → Recurring.</p>` : ''}
+    ${rule ? `<p class="hint">Changes apply from the next date on. Entries already added stay as they are.</p>` : ''}
+    <div class="actions">${isNew ? '' : `<button class="btn danger" value="del">${rule ? 'Stop' : 'Delete'}</button>`}<button class="btn primary" value="save">Save</button></div></form>`,
+  (fd, sub) => {
+    if (sub && sub.value === 'del') {
+      if (rule) {
+        if (!confirm('Stop this recurring entry? Entries already added are kept.')) return false;
+        const gone = live(D.recurring, rule.id); D.recurring = D.recurring.filter(r => r.id !== rule.id);
+        toast('Recurring stopped', () => gone && D.recurring.push(gone)); return;
+      }
+      const gone = live(D.transactions, t.id); D.transactions = D.transactions.filter(x => x.id !== t.id);
+      toast('Entry deleted', () => gone && D.transactions.push(gone)); return;
+    }
+    const amount = parseFloat(fd.amount);
+    if (!(amount > 0)) { toast('Enter an amount'); return false; }
+    if (fd.type === 'transfer' && fd.account === fd.to) { toast('Pick two different accounts'); return false; }
+    const tpl = {type:fd.type, amount:Math.round(amount*100)/100, account:fd.account, to:fd.type==='transfer'?fd.to:'', category:fd.type==='transfer'?'':fd.category, note:(fd.note||'').trim()};
+    const date = fd.date || today();
+    if (rule) {
+      const cur = live(D.recurring, rule.id); if (!cur) { toast('That series was stopped elsewhere'); return; }
+      Object.assign(cur, {tpl, freq:fd.freq, next:date, anchor:parseD(date).getDate()});
+      const n = runRecurring(); toast(n ? `Series updated, ${n} added` : 'Series updated'); return;
+    }
+    if (isNew) {
+      if (fd.fav && !D.quick.some(q => stable({...q, id:0, label:0}) === stable({...tpl, id:0, label:0}))) D.quick.push({id:uid_(), ...tpl});
+      if (fd.freq) {
+        D.recurring.push({id:uid_(), tpl, freq:fd.freq, anchor:parseD(date).getDate(), next:date});
+        runRecurring();
+        toast(date > today() ? `Repeats ${FREQ[fd.freq].toLowerCase()}, starting ${relLabel(date)}` : `Saved. Repeats ${FREQ[fd.freq].toLowerCase()}`);
+      } else {
+        const nid = uid_(); D.transactions.push({id:nid, created:Date.now(), ...tpl, date});
+        toast(fd.fav ? 'Saved, and added to quick entries' : 'Saved');
+      }
+      return;
+    }
+    const cur = live(D.transactions, t.id); if (!cur) { toast('That entry was deleted elsewhere'); return; }
+    Object.assign(cur, tpl, {date}); toast('Updated');
+  });
+  const f = $('#sf');
+  const sync = () => {
+    const ty = f.elements.type.value;
+    $('#toWrap').hidden = ty !== 'transfer'; $('#catWrap').hidden = ty === 'transfer';
+    $('#accLbl').textContent = ty === 'transfer' ? 'From' : 'Account';
+    const cats = [...D.categories[ty === 'income' ? 'income' : 'expense']];
+    const cur = $('#catSel').value || t.category;
+    if (cur && t.type === ty && !cats.includes(cur)) cats.push(cur);
+    $('#catSel').innerHTML = cats.map(c => `<option ${c===cur?'selected':''}>${esc(c)}</option>`).join('');
+  };
+  f.addEventListener('change', e => { if (e.target.name === 'type') sync(); });
+  sync();
+}
+function accountForm(a){
+  const isNew = !a; const v = a || {name:'', type:'bank', opening:0};
+  const types = ['cash','bank','card','wallet','investment'];
+  openSheet(`<form id="sf">${head(isNew ? 'New account' : 'Edit account')}
+    <label class="f"><span>Name</span><input name="name" value="${esc(v.name)}" placeholder="e.g. HDFC Savings" autocomplete="off" ${isNew?'autofocus':''}></label>
+    <div class="grid2">
+      <label class="f"><span>Type</span><select name="type">${types.map(x => `<option value="${x}" ${x===v.type?'selected':''}>${cap(x)}</option>`).join('')}</select></label>
+      <label class="f"><span>Opening balance</span><input name="opening" type="number" inputmode="decimal" step="0.01" value="${v.opening}"></label>
+    </div>
+    <p class="hint">Balance = opening balance + every entry in this account. Use a negative opening balance for card dues.</p>
+    ${actions(isNew)}</form>`,
+  (fd, sub) => {
+    if (sub && sub.value === 'del') {
+      if (D.transactions.some(t => t.account === a.id || t.to === a.id)) { toast('This account has entries'); return false; }
+      if (D.recurring.some(r => r.tpl.account === a.id || r.tpl.to === a.id)) { toast('A recurring entry uses this account'); return false; }
+      D.quick = D.quick.filter(q => q.account !== a.id && q.to !== a.id);
+      if (D.alloc) D.alloc.buckets.forEach(b => b.accts = (b.accts||[]).filter(x => x !== a.id));
+      if (D.accounts.length <= 1) { toast('Keep at least one account'); return false; }
+      if (!confirm(`Delete ${a.name}?`)) return false;
+      D.accounts = D.accounts.filter(x => x.id !== a.id); return;
+    }
+    const name = (fd.name||'').trim(); if (!name) { toast('Give it a name'); return false; }
+    const rec = {name, type:fd.type, opening:parseFloat(fd.opening) || 0};
+    if (isNew) D.accounts.push({id:uid_(), ...rec}); else { const cur = live(D.accounts, a.id); if (cur) Object.assign(cur, rec); }
+  });
+}
+function budgetForm(cat){
+  openSheet(`<form id="sf">${head(esc(cat))}
+    <label class="f"><span>Monthly limit</span><input name="limit" type="number" inputmode="decimal" min="0" step="1" value="${D.budgets[cat] || ''}" placeholder="₹0" autofocus></label>
+    <p class="hint">Leave empty to remove the budget for this category.</p>
+    ${actions(true)}</form>`,
+  fd => { const v = parseFloat(fd.limit); if (v > 0) D.budgets[cat] = v; else delete D.budgets[cat]; toast('Budget saved'); });
+}
+function taskForm(x){
+  const isNew = !x;
+  const v = x || {title:'', project:S.proj !== 'all' ? S.proj : D.projects[0].id, due:S.taskFilter === 'all' ? '' : today(), time:'', priority:2, note:''};
+  openSheet(`<form id="sf">${head(isNew ? 'New task' : 'Edit task')}
+    <label class="f"><span>Task</span><input name="title" value="${esc(v.title)}" placeholder="What needs doing?" autocomplete="off" ${isNew?'autofocus':''}></label>
+    <div class="seg">${[[1,'High'],[2,'Medium'],[3,'Low']].map(([p,l]) => `<label><input type="radio" name="priority" value="${p}" ${v.priority==p?'checked':''}><span>${l}</span></label>`).join('')}</div>
+    <div class="grid2">
+      <label class="f"><span>Due date</span><input type="date" name="due" value="${v.due||''}"></label>
+      <label class="f"><span>Time</span><input type="time" name="time" value="${v.time||''}"></label>
+    </div>
+    <label class="f"><span>Remind me</span><select name="remind" id="remSel">${REMIND.map(([rv, l]) => `<option value="${rv}" ${(x && x.remind != null ? String(x.remind) : '') === rv ? 'selected' : ''}>${l}</option>`).join('')}</select></label>
+    <p class="hint" id="remHint" style="margin:-6px 2px 12px"></p>
+    <div class="grid2">
+      <label class="f"><span>Repeat</span><select name="repeat"><option value="">Never</option>${['daily','weekdays','weekly','monthly'].map(f => `<option value="${f}" ${v.repeat===f?'selected':''}>${FREQ[f]}</option>`).join('')}</select></label>
+      <label class="f"><span>Project</span><select name="project">${D.projects.map(p => `<option value="${p.id}" ${p.id===v.project?'selected':''}>${esc(p.name)}</option>`).join('')}</select></label>
+    </div>
+    <label class="f"><span>Notes</span><textarea name="note" placeholder="Optional">${esc(v.note)}</textarea></label>
+    <button type="button" class="btn ghost" style="width:100%;margin-bottom:4px" data-act="toCal">📅 Add to calendar</button>
+    <p class="hint" style="margin:0 2px 8px">Your Calendar app reminds you on time, even when DARK-SATIN is closed.</p>
+    ${actions(isNew)}</form>`,
+  (fd, sub) => {
+    if (sub && sub.value === 'del') {
+      const gone = live(D.tasks, x.id); D.tasks = D.tasks.filter(t => t.id !== x.id);
+      toast('Task deleted', () => gone && D.tasks.push(gone)); return;
+    }
+    const title = (fd.title||'').trim(); if (!title) { toast('Give the task a name'); return false; }
+    const repeat = fd.repeat || '', due = fd.due || (repeat ? today() : '');
+    const remind = fd.remind === '' || fd.remind === undefined ? null : +fd.remind;
+    const rec = {title, priority:+fd.priority || 2, due: due || (remind !== null ? today() : ''), time:(due || remind !== null) ? (fd.time || '') : '', project:fd.project, note:(fd.note||'').trim(), repeat, anchor: due ? parseD(due).getDate() : null, remind, edited:Date.now()};
+    const late = remind !== null && remindAt({...rec, done:false}) === null;
+    if (isNew) D.tasks.push({id:uid_(), done:false, doneAt:null, created:Date.now(), ...rec});
+    else { const cur = live(D.tasks, x.id); if (!cur) { toast('That task was deleted elsewhere'); return; } Object.assign(cur, rec); }
+    toast(late ? 'Saved. That reminder time has already passed.' : isNew ? (remind !== null ? 'Task added with reminder' : 'Task added') : 'Updated');
+  });
+  // Reminder helpers: picking a time on a new task switches the reminder on; explain what will happen.
+  const f = $('#sf'), rs = $('#remSel');
+  const hint = () => {
+    const r = rs.value, tm = f.elements.time.value, dd = f.elements.due.value;
+    $('#remHint').textContent = r === '' ? '' : (!tm ? 'No time set, so it reminds at 9:00 am' + (dd ? '' : ' today') + '. ' : '') + (window.Notification?.permission === 'granted' ? '' : 'Turn on reminders in Settings to get notifications.');
+  };
+  f.elements.time.addEventListener('change', () => { if (isNew && f.elements.time.value && rs.value === '') rs.value = '0'; hint(); });
+  rs.addEventListener('change', hint); f.elements.due.addEventListener('change', hint); hint();
+}
+function projectForm(p){
+  const isNew = !p, canDel = !isNew && D.projects.length > 1;
+  openSheet(`<form id="sf">${head(isNew ? 'New project' : 'Edit project')}
+    <label class="f"><span>Name</span><input name="name" value="${esc(p?.name)}" placeholder="e.g. Home, Health, Side project" autocomplete="off" autofocus></label>
+    ${canDel ? '<p class="hint">Deleting a project moves its tasks to another project.</p>' : ''}
+    <div class="actions">${canDel ? '<button class="btn danger" value="del">Delete</button>' : ''}<button class="btn primary" value="save">Save</button></div></form>`,
+  (fd, sub) => {
+    if (sub && sub.value === 'del') {
+      if (!confirm(`Delete "${p.name}"?`)) return false;
+      const to = D.projects.find(q => q.id !== p.id).id;
+      D.tasks.forEach(t => { if (t.project === p.id) t.project = to; });
+      D.projects = D.projects.filter(q => q.id !== p.id); S.proj = 'all'; return;
+    }
+    const name = (fd.name||'').trim(); if (!name) { toast('Give it a name'); return false; }
+    if (isNew) { const id = uid_(); D.projects.push({id, name}); S.proj = id; } else { const cur = live(D.projects, p.id); if (cur) cur.name = name; }
+  });
+}
+function settingsForm(){
+  openSheet(`<form id="sf">${head('Settings')}
+    <div class="acctbox"><span class="label">Signed in as</span><b>${esc(user?.email)}</b>
+      <div class="acctbtns"><button type="button" class="btn ghost small" data-act="pwreset">Change password</button><button type="button" class="btn danger small" data-act="signout">Sign out</button></div></div>
+    ${remindSettingsHtml()}
+    ${cryptoSettingsHtml()}
+    ${lockSettingsHtml()}
+    <div class="setrow"><span>Theme</span><button type="button" class="btn ghost small" data-act="theme">${theme === 'dark' ? 'Switch to light' : 'Switch to dark'}</button></div>
+    ${D.quick.length ? `<div class="f"><span>Quick entries (tap × to remove)</span><div class="qlist">${D.quick.map(q => `<span class="chip">${esc(quickLabel(q))}<button type="button" data-act="delQuick" data-id="${q.id}" aria-label="Remove">×</button></span>`).join('')}</div></div>` : ''}
+    <label class="f"><span>Expense categories (comma separated)</span><textarea name="exp">${esc(D.categories.expense.join(', '))}</textarea></label>
+    <label class="f"><span>Income categories (comma separated)</span><textarea name="inc">${esc(D.categories.income.join(', '))}</textarea></label>
+    <div class="setrow"><span>Backup file</span><span style="display:flex;gap:8px"><button type="button" class="btn ghost small" data-act="export">Export</button><button type="button" class="btn ghost small" data-act="import">Restore</button></span></div>
+    <p class="hint">Your data is private to your account and syncs to the cloud. It also works offline and syncs when you're back online.</p>
+    ${actions(true)}</form>`,
+  fd => {
+    const parse = s => [...new Set((s||'').split(',').map(x => x.trim()).filter(Boolean))];
+    const e = parse(fd.exp), i = parse(fd.inc);
+    if (!e.length || !i.length) { toast('Keep at least one category'); return false; }
+    D.categories.expense = e; D.categories.income = i; toast('Settings saved');
+  });
+  fillRemind();
+}
+function fab(){
+  if (S.tab === 'money') return txnForm(null, 'expense');
+  if (S.tab === 'trades') return tradeForm(null);
+  if (S.tab === 'tasks') return taskForm(null);
+  openSheet(`${head('Add')}<div class="quick">
+    <button data-act="quick" data-v="expense"><span class="e">↗</span>Expense<small>Money out</small></button>
+    <button data-act="quick" data-v="income"><span class="e">↙</span>Income<small>Money in</small></button>
+    <button data-act="quick" data-v="task"><span class="e">✓</span>Task<small>To-do for a day</small></button>
+    <button data-act="quick" data-v="journal"><span class="e">✎</span>Journal<small>Today's entry</small></button></div>
+    ${D.quick.length ? `<div class="qbar" style="margin-top:16px"><span class="label">Quick add · one tap saves for today</span><div class="chips">${D.quick.map(q => `<button type="button" class="chip" data-act="useQuick" data-id="${q.id}">${esc(quickLabel(q))}</button>`).join('')}</div></div>` : ''}`, null);
+}
+
+/* ---------- backup ---------- */
+function exportData(){
+  if (journalLocked()) { toast('Unlock your journal first, so the backup includes it'); return; }
+  D.lastBackup = Date.now(); save();
+  const out = {...D, journalCrypto:null, journal:Object.fromEntries(Object.entries(D.journal).filter(([, e]) => !e.locked))};
+  const blob = new Blob([JSON.stringify(out, null, 1)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `dark-satin-backup-${today()}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  toast('Backup downloaded');
+}
+$('#importFile').addEventListener('change', async e => {
+  const file = e.target.files[0]; e.target.value = ''; if (!file) return;
+  try {
+    const obj = JSON.parse(await file.text());
+    if (!obj || !Array.isArray(obj.transactions) || !Array.isArray(obj.accounts)) throw new Error('bad');
+    if (journalLocked()) { toast('Unlock your journal before restoring'); return; }
+    if (!confirm('Replace everything in your account with this backup?')) return;
+    const keep = D.journalCrypto; D = migrate(obj); D.journalCrypto = jKey ? keep : null;
+    save(); closeSheet(); render(); toast('Backup restored');
+  } catch (_) { toast("That file isn't a DARK-SATIN backup"); }
+});
+
+/* ---------- theme ---------- */
+const THEME_KEY = 'daybook.theme';
+let theme = null; try { theme = localStorage.getItem(THEME_KEY); } catch (_) {}
+theme = theme || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+function applyTheme(){ document.documentElement.dataset.theme = theme; $('meta[name=theme-color]').content = theme === 'light' ? '#f4f2ec' : '#0e1013'; }
+function toggleTheme(){ theme = theme === 'dark' ? 'light' : 'dark'; applyTheme(); try { localStorage.setItem(THEME_KEY, theme); } catch (_) {} }
+applyTheme();
+
+/* ---------- one click handler for everything ---------- */
+document.addEventListener('click', async e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const id = el.dataset.id;
+  switch (el.dataset.act) {
+    // login screens
+    case 'gview': gate(el.dataset.v); break;
+    case 'pwshow': { const inp = el.previousElementSibling; const show = inp.type === 'password'; inp.type = show ? 'text' : 'password'; el.textContent = show ? 'Hide' : 'Show'; break; }
+    case 'resend': try { await sendEmailVerification(auth.currentUser); $('#gerr').textContent = 'Sent again. Check your inbox and spam folder.'; } catch (ex) { $('#gerr').textContent = authMsg(ex); } break;
+    case 'verified': {
+      const u = auth.currentUser; if (!u) break;
+      await u.reload();
+      if (u.emailVerified) { await u.getIdToken(true); startUser(u); }   // fresh token so the rules see the verified email
+      else $('#gerr').textContent = "Not verified yet. Tap the link in the email first.";
+      break;
+    }
+    case 'signout': doSignOut(ready); break;
+    case 'pwreset': try { await sendPasswordResetEmail(auth, user.email); toast('Password reset link sent to your email'); } catch (ex) { toast(authMsg(ex)); } break;
+    // app
+    case 'tab': flushJournal(); S.tab = el.dataset.tab; render(); scrollTo(0,0); break;
+    case 'gobudgets': S.tab = 'money'; S.moneyView = 'budgets'; S.ym = monthOf(today()); render(); scrollTo(0,0); break;
+    case 'month': S.ym = addMonths(S.ym, +el.dataset.n); render(); break;
+    case 'mview': S.moneyView = el.dataset.v; S.catFilter = null; render(); break;
+    case 'goreports': S.tab = 'money'; S.moneyView = 'reports'; S.ym = monthOf(today()); render(); scrollTo(0,0); break;
+    case 'pickMonth': S.ym = el.dataset.m; render(); break;
+    case 'catTx': S.moneyView = 'txns'; S.catFilter = el.dataset.cat; render(); scrollTo(0,0); break;
+    case 'clearCat': S.catFilter = null; render(); break;
+    case 'editAlloc': allocForm(); break;
+    case 'allocBase': draft.base = el.dataset.v; drawAlloc(); break;
+    case 'allocAdd': draft.buckets.push({id:uid_(), name:'', pct:Math.max(0, 100 - allocTotal()), kind:'spend', cats:[], accts:[]}); drawAlloc(); break;
+    case 'allocDel': draft.buckets.splice(+el.dataset.i, 1); drawAlloc(); break;
+    case 'allocKind': draft.buckets[+el.dataset.i].kind = el.dataset.v; drawAlloc(); break;
+    case 'allocCat': {
+      const b = draft.buckets[+el.dataset.i], c = el.dataset.c;
+      if (b.cats.includes(c)) b.cats = b.cats.filter(x => x !== c);
+      else { draft.buckets.forEach(o => o.cats = o.cats.filter(x => x !== c)); b.cats.push(c); }   // a category lives in one bucket
+      drawAlloc(); break;
+    }
+    case 'allocAcct': { const b = draft.buckets[+el.dataset.i], a = el.dataset.a; b.accts = b.accts.includes(a) ? b.accts.filter(x => x !== a) : [...b.accts, a]; drawAlloc(); break; }
+    case 'editTxn': {
+      const t = live(D.transactions, id); if (!t) break;
+      if (t.auto === 'trading') { openSheet(`${head('Trading P&L')}<p class="hint" style="margin:-4px 2px 14px">This entry is your net trading P&L for ${esc(fmtLong(t.date))}, added from the Trades tab. Change your trades there and it updates by itself.</p><div class="actions"><button class="btn primary" data-act="tradeDay" data-d="${t.date}">Open that day</button></div>`, null); break; }
+      txnForm(t); break;
+    }
+    case 'newAccount': accountForm(null); break;
+    case 'editAccount': accountForm(live(D.accounts, id)); break;
+    case 'editBudget': budgetForm(el.dataset.cat); break;
+    case 'toggleTask': { const t = live(D.tasks, id); if (!t) break; const m = toggleTask(t); save(); render(); if (m) toast(m); break; }
+    case 'undo': if (undoFn) { const f = undoFn; undoFn = null; f(); save(); render(); $('#toast').classList.remove('show'); } break;
+    case 'useQuick': {
+      const q = live(D.quick, id); if (!q) break;
+      if (!D.accounts.some(a => a.id === q.account)) { toast('Its account no longer exists'); break; }
+      const {id:_q, label:_l, ...tpl} = q, nid = uid_();
+      D.transactions.push({id:nid, created:Date.now(), ...tpl, date:today()}); save();
+      if ($('#sheetBg').classList.contains('open')) closeSheet(); else render();
+      toast(`Added ${quickLabel(q)}`, () => { D.transactions = D.transactions.filter(x => x.id !== nid); });
+      break;
+    }
+    case 'delQuick': D.quick = D.quick.filter(q => q.id !== id); save(); el.closest('.chip').remove(); break;
+    case 'editRule': { const r = live(D.recurring, id); if (r) txnForm(null, null, r); break; }
+    case 'install': if (installEvt) { const ev = installEvt; ev.prompt(); ev.userChoice.finally(() => { installEvt = null; render(); }); } break;
+    // reminders
+    case 'toCal': {
+      const f = $('#sf'), title = f.elements.title.value.trim(), due = f.elements.due.value || today();
+      if (!title) { toast('Type the task first'); break; }
+      const link = calendarLink({title, due, time:f.elements.time.value, repeat:f.elements.repeat.value, note:f.elements.note.value.trim()});
+      if (link.startsWith('intent:')) location.href = link; else window.open(link, '_blank', 'noopener');
+      break;
+    }
+    case 'pushOn': {
+      el.disabled = true;
+      try { await pushEnable(); toast('Reminders are on for this phone'); }
+      catch (ex) { toast(window.Notification?.permission === 'denied' ? 'Notifications were blocked' : 'Could not turn on reminders'); console.error(ex); }
+      fillRemind(); break;
+    }
+    case 'pushOff': try { await pushDisable(); toast('Reminders off for this phone'); } catch (_) { toast('Could not turn off'); } fillRemind(); break;
+    case 'pushTest': {
+      try { const reg = await navigator.serviceWorker.ready; await reg.showNotification('DARK-SATIN', {body:'Notifications work on this phone ✓', icon:'logo-192.png', badge:'badge-96.png', tag:'test-local'}); } catch (_) {}
+      testAt = Date.now() + 60000; save();
+      toast('Sent. (If you set up the GitHub sender, a second one follows in 1 to 6 min.)'); break;
+    }
+    // app lock
+    case 'pin': pinKey(el.dataset.k); break;
+    case 'bio': bioUnlock(); break;
+    case 'forgotPin': if (confirm('Sign out of this phone? You will need your email and password to sign back in, then you can set a new PIN.')) { lockCfg = null; saveLock(); doSignOut(false); } break;
+    case 'pinSet': pinForm(); break;
+    case 'lockOff': if (confirm('Turn off the app lock on this phone?')) { lockCfg = null; saveLock(); closeSheet(); toast('App lock is off'); } break;
+    case 'bioToggle': {
+      if (lockCfg.bio) { lockCfg.bio = null; saveLock(); el.textContent = 'Turn on'; toast('Fingerprint off. PIN only.'); break; }
+      if (!(await bioAvailable())) { toast("This phone's browser can't use fingerprint here"); break; }
+      try { lockCfg.bio = await bioRegister(); saveLock(); el.textContent = 'Turn off'; toast('Fingerprint is on'); }
+      catch (_) { toast('Fingerprint was not set up'); }
+      break;
+    }
+    case 'editTask': taskForm(live(D.tasks, id)); break;
+    case 'tfilter': S.taskFilter = el.dataset.v; render(); break;
+    case 'proj': S.proj = el.dataset.v; render(); break;
+    case 'newProject': projectForm(null); break;
+    case 'editProject': projectForm(live(D.projects, id)); break;
+    case 'jday': flushJournal(); S.jDate = addDays(S.jDate, +el.dataset.n); render(); break;
+    case 'jopen': flushJournal(); if ($('#sheetBg').classList.contains('open')) closeSheet(); S.tab = 'journal'; S.jDate = el.dataset.d; render(); scrollTo(0,0); break;
+    // trading
+    case 'tmonth': S.tym = addMonths(S.tym, +el.dataset.n); render(); break;
+    case 'tradeDay': tradeDaySheet(el.dataset.d); break;
+    case 'editTrade': { const t = live(D.trades, id); if (t) tradeForm(t); break; }
+    case 'addTradeOn': tradeForm(null, el.dataset.d); break;
+    case 'tradeSettings': tradeSettingsForm(); break;
+    // search
+    case 'search': searchSheet(); break;
+    case 'qTxn': { const t = live(D.transactions, id); if (t) (t.auto === 'trading' ? tradeDaySheet(t.date) : txnForm(t)); break; }
+    case 'qTask': { const t = live(D.tasks, id); if (t) taskForm(t); break; }
+    case 'qTrade': { const t = live(D.trades, id); if (t) tradeForm(t); break; }
+    // journal encryption
+    case 'jForgot': forgotCrypto(); break;
+    case 'jCryptoOn': cryptoForm(); break;
+    case 'jCryptoOff': if (confirm('Turn off encryption? Your journal will be saved as plain text again.')) { await disableCrypto(); closeSheet(); render(); toast('Journal encryption is off'); } break;
+    case 'jLockNow': if ($('#sheetBg').classList.contains('open')) closeSheet(); await lockJournalNow(); break;
+    case 'tabJournal': closeSheet(); S.tab = 'journal'; render(); break;
+    // bank import
+    case 'openImport': importStart(); break;
+    case 'impPick': busyUntil = Date.now() + 120000; $('#impFile').click(); break;
+    case 'impGo': importGo(); break;
+    case 'mood': { flushJournal(); const en = jEntry(S.jDate, true), v = +el.dataset.v; en.mood = en.mood === v ? 0 : v; en.updated = Date.now(); cleanEntry(S.jDate); save(); render(); break; }
+    case 'planToTasks': planToTasks(); break;
+    case 'fab': fab(); break;
+    case 'quick': { const v = el.dataset.v; if (v === 'task') taskForm(null); else if (v === 'journal') { closeSheet(); S.tab = 'journal'; S.jDate = today(); render(); } else txnForm(null, v); break; }
+    case 'settings': settingsForm(); break;
+    case 'closeSheet': closeSheet(); break;
+    case 'theme': toggleTheme(); el.textContent = theme === 'dark' ? 'Switch to light' : 'Switch to dark'; break;
+    case 'export': exportData(); break;
+    case 'import': busyUntil = Date.now() + 120000; $('#importFile').click(); break;
+  }
+});
+document.addEventListener('change', e => {
+  if (e.target.id === 'lockAfter' && lockCfg) { lockCfg.after = +e.target.value; saveLock(); toast('Saved'); }
+});
+document.addEventListener('keydown', e => {
+  if (!locked) return;
+  if (/^\d$/.test(e.key)) pinKey(e.key); else if (e.key === 'Backspace') pinKey('del');
+});
+// Lock when the app comes back after being away; add any recurring entries that came due.
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    flushJournal();
+    if (!lockCfg || Date.now() < busyUntil) return;          // a fingerprint prompt or file picker is open
+    hiddenAt = Date.now();
+    if (!(lockCfg.after > 0)) showLock();                     // "Immediately": cover the screen before the app switcher snapshot
+    return;
+  }
+  const wasLocked = locked;
+  if (lockCfg && hiddenAt && Date.now() - hiddenAt >= (lockCfg.after || 0) * 1000) showLock();   // offers fingerprint itself
+  if (wasLocked && locked && lockCfg?.bio && Date.now() >= busyUntil) setTimeout(bioUnlock, 300);
+  hiddenAt = 0;
+  if (ready) { const n = runRecurring(); save(); if (n) { render(); toast(`${n} recurring entr${n > 1 ? 'ies' : 'y'} added`); } }
+});
+addEventListener('pagehide', flushJournal);
+
+/* ---------- start ---------- */
+if (!configured) gate('setup');
+else {
+  gate('loading');
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = initializeFirestore(app, {localCache: persistentLocalCache({tabManager: persistentMultipleTabManager()}), ignoreUndefinedProperties: true});
+  onAuthStateChanged(auth, u => {
+    if (!u) { if (user) location.reload(); else gate('signin'); return; }
+    if (!u.emailVerified) { gate('verify', {email: u.email}); return; }
+    startUser(u);
+  });
+}
+</script>
+</body>
+</html>

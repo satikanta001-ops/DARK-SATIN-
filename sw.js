@@ -1,6 +1,6 @@
 /* DARK-SATIN service worker: lets the app open instantly and offline.
    Your data itself is synced by Firebase, not by this file. */
-const VERSION = 'ds-v4';
+const VERSION = 'ds-v5';
 const SHELL = ['./', './index.html', './manifest.json', './logo.svg', './logo-192.png', './logo-512.png', './badge-96.png'];
 
 /* ---- reminders: show pushes from the GitHub sender, handle taps ---- */
